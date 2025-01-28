@@ -10,31 +10,31 @@ public:
 	~Helper();
 };
 
-///ƒŠƒUƒ‹ƒg‚ğƒ`ƒFƒbƒN‚µAƒ_ƒ‚¾‚Á‚½‚çfalse‚ğ•Ô‚·
-///@param result DXŠÖ”‚©‚ç‚Ì–ß‚è’l
-///@param errBlob ƒGƒ‰[‚ª‚ ‚é‚È‚çƒGƒ‰[‚ğo—Í
-///@remarks ƒfƒoƒbƒO‚É‚ÍerrBlob‚æ‚èƒfƒoƒbƒOo—Í‚ğs‚¢
-///‚»‚Ì‚Ü‚ÜƒNƒ‰ƒbƒVƒ…‚·‚é
+///ãƒªã‚¶ãƒ«ãƒˆã‚’ãƒã‚§ãƒƒã‚¯ã—ã€ãƒ€ãƒ¡ã ã£ãŸã‚‰falseã‚’è¿”ã™
+///@param result DXé–¢æ•°ã‹ã‚‰ã®æˆ»ã‚Šå€¤
+///@param errBlob ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚‹ãªã‚‰ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ›
+///@remarks ãƒ‡ãƒãƒƒã‚°æ™‚ã«ã¯errBlobã‚ˆã‚Šãƒ‡ãƒãƒƒã‚°å‡ºåŠ›ã‚’è¡Œã„
+///ãã®ã¾ã¾ã‚¯ãƒ©ãƒƒã‚·ãƒ¥ã™ã‚‹
 extern bool CheckResult(HRESULT &result, ID3DBlob* errBlob=nullptr);
 
-///ƒAƒ‰ƒCƒƒ“ƒg”’l‚ğ•Ô‚·
-///@param size ƒAƒ‰ƒCƒƒ“ƒg‘ÎÛ‚ÌƒTƒCƒY
-///@param alignment ƒAƒ‰ƒCƒƒ“ƒgƒTƒCƒY
-///@retval ƒAƒ‰ƒCƒƒ“ƒg‚³‚ê‚Ä‚µ‚Ü‚Á‚½ƒTƒCƒY
+///ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆæ•°å€¤ã‚’è¿”ã™
+///@param size ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆå¯¾è±¡ã®ã‚µã‚¤ã‚º
+///@param alignment ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã‚µã‚¤ã‚º
+///@retval ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã•ã‚Œã¦ã—ã¾ã£ãŸã‚µã‚¤ã‚º
 extern unsigned int AligmentedValue(unsigned int size, unsigned int alignment = 16);
 
 
-//‚PƒoƒCƒgstring‚ğƒƒCƒh•¶šwstring‚É•ÏŠ·‚·‚é
+//ï¼‘ãƒã‚¤ãƒˆstringã‚’ãƒ¯ã‚¤ãƒ‰æ–‡å­—wstringã«å¤‰æ›ã™ã‚‹
 extern std::wstring WStringFromString(const std::string& str);
 
-///Šg’£q‚ğ•Ô‚·
-///@param path Œ³‚ÌƒpƒX•¶š—ñ
-///@return Šg’£q•¶š—ñ
+///æ‹¡å¼µå­ã‚’è¿”ã™
+///@param path å…ƒã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+///@return æ‹¡å¼µå­æ–‡å­—åˆ—
 extern std::wstring GetExtension(const std::wstring& path);
 
-///ƒKƒEƒXƒEƒFƒCƒg’l‚ğ•Ô‚·
-///@param count •Ğ‘¤‚¢‚­‚Â‚ÌƒEƒFƒCƒg’l‚ğ‚Á‚Ä‚¨‚­‚©
-///@param s ƒKƒEƒXŠÖ”‚É‚¨‚¯‚éƒĞ’l
-///@retval ƒKƒEƒXƒEƒFƒCƒg”z—ñ(count‚Åw’è‚³‚ê‚½‰Â•Ï’·”z—ñ)
-///@remarks ‘S‚Ä‚ÌƒEƒFƒCƒg’l‚ğ‘«‚µ‚½‚ç1‚É‚È‚é‚Í‚¸‚È‚Ì‚Å
+///ã‚¬ã‚¦ã‚¹ã‚¦ã‚§ã‚¤ãƒˆå€¤ã‚’è¿”ã™
+///@param count ç‰‡å´ã„ãã¤ã®ã‚¦ã‚§ã‚¤ãƒˆå€¤ã‚’æŒã£ã¦ãŠãã‹
+///@param s ã‚¬ã‚¦ã‚¹é–¢æ•°ã«ãŠã‘ã‚‹Ïƒå€¤
+///@retval ã‚¬ã‚¦ã‚¹ã‚¦ã‚§ã‚¤ãƒˆé…åˆ—(countã§æŒ‡å®šã•ã‚ŒãŸå¯å¤‰é•·é…åˆ—)
+///@remarks å…¨ã¦ã®ã‚¦ã‚§ã‚¤ãƒˆå€¤ã‚’è¶³ã—ãŸã‚‰1ã«ãªã‚‹ã¯ãšãªã®ã§
 extern std::vector<float> GetGaussianWeights(size_t count, float s);

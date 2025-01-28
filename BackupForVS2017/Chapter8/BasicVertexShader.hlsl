@@ -1,34 +1,34 @@
 #include"BasicType.hlsli"
 
-//’è”ƒoƒbƒtƒ@0
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡0
 cbuffer SceneData : register(b0) {
-	matrix world;//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	matrix world;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	matrix view;
-	matrix proj;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	matrix proj;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	float3 eye;
 };
 
-//’¸“_ƒVƒF[ƒ_¨ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö‚Ì‚â‚èæ‚è‚Ég—p‚·‚é
-//\‘¢‘Ì
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€â†’ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸ã®ã‚„ã‚Šå–ã‚Šã«ä½¿ç”¨ã™ã‚‹
+//æ§‹é€ ä½“
 struct Output {
-	float4 svpos:SV_POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 pos:POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 normal:NORMAL0;//–@üƒxƒNƒgƒ‹
-	float4 vnormal:NORMAL1;//–@üƒxƒNƒgƒ‹
-	float2 uv:TEXCOORD;//UV’l
-	float3 ray:VECTOR;//ƒxƒNƒgƒ‹
+	float4 svpos:SV_POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 pos:POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 normal:NORMAL0;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float4 vnormal:NORMAL1;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float2 uv:TEXCOORD;//UVå€¤
+	float3 ray:VECTOR;//ãƒ™ã‚¯ãƒˆãƒ«
 };
 
 BasicType BasicVS(float4 pos : POSITION , float4 normal : NORMAL, float2 uv : TEXCOORD) {
-	BasicType output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
+	BasicType output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
 	pos = mul(world, pos);
-	output.svpos = mul(mul(proj,view),pos);//ƒVƒF[ƒ_‚Å‚Í—ñ—Dæ‚È‚Ì‚Å’ˆÓ
+	output.svpos = mul(mul(proj,view),pos);//ã‚·ã‚§ãƒ¼ãƒ€ã§ã¯åˆ—å„ªå…ˆãªã®ã§æ³¨æ„
 	output.pos = mul(view, pos);
-	normal.w = 0;//‚±‚±d—v(•½sˆÚ“®¬•ª‚ğ–³Œø‚É‚·‚é)
-	output.normal = mul(world,normal);//–@ü‚É‚àƒ[ƒ‹ƒh•ÏŠ·‚ğs‚¤
+	normal.w = 0;//ã“ã“é‡è¦(å¹³è¡Œç§»å‹•æˆåˆ†ã‚’ç„¡åŠ¹ã«ã™ã‚‹)
+	output.normal = mul(world,normal);//æ³•ç·šã«ã‚‚ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã‚’è¡Œã†
 	output.vnormal = mul(view, output.normal);
 	output.uv = uv;
-	output.ray = normalize(pos.xyz - mul(view,eye));//‹üƒxƒNƒgƒ‹
+	output.ray = normalize(pos.xyz - mul(view,eye));//è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	return output;
 }

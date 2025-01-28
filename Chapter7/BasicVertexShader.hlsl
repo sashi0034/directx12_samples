@@ -1,19 +1,19 @@
 #include"BasicType.hlsli"
-Texture2D<float4> tex:register(t0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp:register(s0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
+Texture2D<float4> tex:register(t0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp:register(s0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
 
-//’è”ƒoƒbƒtƒ@
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 cbuffer cbuff0 : register(b0) {
-	matrix world;//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	matrix viewproj;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	matrix world;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
+	matrix viewproj;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 };
 
 
 BasicType BasicVS(float4 pos : POSITION , float4 normal : NORMAL, float2 uv : TEXCOORD, min16uint2 boneno : BONE_NO, min16uint weight : WEIGHT) {
-	BasicType output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
-	output.svpos = mul(mul(viewproj,world),pos);//ƒVƒF[ƒ_‚Å‚Í—ñ—Dæ‚È‚Ì‚Å’ˆÓ
-	normal.w = 0;//‚±‚±d—v(•½sˆÚ“®¬•ª‚ğ–³Œø‚É‚·‚é)
-	output.normal = mul(world,normal);//–@ü‚É‚àƒ[ƒ‹ƒh•ÏŠ·‚ğs‚¤
+	BasicType output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
+	output.svpos = mul(mul(viewproj,world),pos);//ã‚·ã‚§ãƒ¼ãƒ€ã§ã¯åˆ—å„ªå…ˆãªã®ã§æ³¨æ„
+	normal.w = 0;//ã“ã“é‡è¦(å¹³è¡Œç§»å‹•æˆåˆ†ã‚’ç„¡åŠ¹ã«ã™ã‚‹)
+	output.normal = mul(world,normal);//æ³•ç·šã«ã‚‚ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã‚’è¡Œã†
 	output.uv = uv;
 	return output;
 }

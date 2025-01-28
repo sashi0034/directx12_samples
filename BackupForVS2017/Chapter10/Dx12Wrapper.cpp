@@ -13,14 +13,14 @@ using namespace std;
 using namespace DirectX;
 
 namespace {
-	///ƒ‚ƒfƒ‹‚ÌƒpƒX‚ÆƒeƒNƒXƒ`ƒƒ‚ÌƒpƒX‚©‚ç‡¬ƒpƒX‚ğ“¾‚é
-	///@param modelPath ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚©‚çŒ©‚½pmdƒ‚ƒfƒ‹‚ÌƒpƒX
-	///@param texPath PMDƒ‚ƒfƒ‹‚©‚çŒ©‚½ƒeƒNƒXƒ`ƒƒ‚ÌƒpƒX
-	///@return ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚©‚çŒ©‚½ƒeƒNƒXƒ`ƒƒ‚ÌƒpƒX
+	///ãƒ¢ãƒ‡ãƒ«ã®ãƒ‘ã‚¹ã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¹ã‹ã‚‰åˆæˆãƒ‘ã‚¹ã‚’å¾—ã‚‹
+	///@param modelPath ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‹ã‚‰è¦‹ãŸpmdãƒ¢ãƒ‡ãƒ«ã®ãƒ‘ã‚¹
+	///@param texPath PMDãƒ¢ãƒ‡ãƒ«ã‹ã‚‰è¦‹ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¹
+	///@return ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‹ã‚‰è¦‹ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¹
 	std::string GetTexturePathFromModelAndTexPath(const std::string& modelPath, const char* texPath) {
-		//ƒtƒ@ƒCƒ‹‚ÌƒtƒHƒ‹ƒ_‹æØ‚è‚Í\‚Æ/‚Ì“ñí—Ş‚ªg—p‚³‚ê‚é‰Â”\«‚ª‚ ‚è
-		//‚Æ‚à‚©‚­––”ö‚Ì\‚©/‚ğ“¾‚ç‚ê‚ê‚Î‚¢‚¢‚Ì‚ÅA‘o•û‚Ìrfind‚ğ‚Æ‚è”äŠr‚·‚é
-		//intŒ^‚É‘ã“ü‚µ‚Ä‚¢‚é‚Ì‚ÍŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡‚Írfind‚ªepos(-1¨0xffffffff)‚ğ•Ô‚·‚½‚ß
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚©ãƒ«ãƒ€åŒºåˆ‡ã‚Šã¯\ã¨/ã®äºŒç¨®é¡ãŒä½¿ç”¨ã•ã‚Œã‚‹å¯èƒ½æ€§ãŒã‚ã‚Š
+		//ã¨ã‚‚ã‹ãæœ«å°¾ã®\ã‹/ã‚’å¾—ã‚‰ã‚Œã‚Œã°ã„ã„ã®ã§ã€åŒæ–¹ã®rfindã‚’ã¨ã‚Šæ¯”è¼ƒã™ã‚‹
+		//intå‹ã«ä»£å…¥ã—ã¦ã„ã‚‹ã®ã¯è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆã¯rfindãŒepos(-1â†’0xffffffff)ã‚’è¿”ã™ãŸã‚
 		int pathIndex1 = modelPath.rfind('/');
 		int pathIndex2 = modelPath.rfind('\\');
 		auto pathIndex = max(pathIndex1, pathIndex2);
@@ -28,28 +28,28 @@ namespace {
 		return folderPath + texPath;
 	}
 
-	///ƒtƒ@ƒCƒ‹–¼‚©‚çŠg’£q‚ğæ“¾‚·‚é
-	///@param path ‘ÎÛ‚ÌƒpƒX•¶š—ñ
-	///@return Šg’£q
+	///ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰æ‹¡å¼µå­ã‚’å–å¾—ã™ã‚‹
+	///@param path å¯¾è±¡ã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+	///@return æ‹¡å¼µå­
 	string
 		GetExtension(const std::string& path) {
 		int idx = path.rfind('.');
 		return path.substr(idx + 1, path.length() - idx - 1);
 	}
 
-	///ƒtƒ@ƒCƒ‹–¼‚©‚çŠg’£q‚ğæ“¾‚·‚é(ƒƒCƒh•¶š”Å)
-	///@param path ‘ÎÛ‚ÌƒpƒX•¶š—ñ
-	///@return Šg’£q
+	///ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰æ‹¡å¼µå­ã‚’å–å¾—ã™ã‚‹(ãƒ¯ã‚¤ãƒ‰æ–‡å­—ç‰ˆ)
+	///@param path å¯¾è±¡ã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+	///@return æ‹¡å¼µå­
 	wstring
 		GetExtension(const std::wstring& path) {
 		int idx = path.rfind(L'.');
 		return path.substr(idx + 1, path.length() - idx - 1);
 	}
 
-	///ƒeƒNƒXƒ`ƒƒ‚ÌƒpƒX‚ğƒZƒpƒŒ[ƒ^•¶š‚Å•ª—£‚·‚é
-	///@param path ‘ÎÛ‚ÌƒpƒX•¶š—ñ
-	///@param splitter ‹æØ‚è•¶š
-	///@return •ª—£‘OŒã‚Ì•¶š—ñƒyƒA
+	///ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¹ã‚’ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿æ–‡å­—ã§åˆ†é›¢ã™ã‚‹
+	///@param path å¯¾è±¡ã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+	///@param splitter åŒºåˆ‡ã‚Šæ–‡å­—
+	///@return åˆ†é›¢å‰å¾Œã®æ–‡å­—åˆ—ãƒšã‚¢
 	pair<string, string>
 		SplitFileName(const std::string& path, const char splitter = '*') {
 		int idx = path.find(splitter);
@@ -59,28 +59,28 @@ namespace {
 		return ret;
 	}
 
-	///string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚©‚çwstring(ƒƒCƒh•¶š—ñ)‚ğ“¾‚é
-	///@param str ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ
-	///@return •ÏŠ·‚³‚ê‚½ƒƒCƒh•¶š—ñ
+	///string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‹ã‚‰wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‚’å¾—ã‚‹
+	///@param str ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—
+	///@return å¤‰æ›ã•ã‚ŒãŸãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—
 	std::wstring
 		GetWideStringFromString(const std::string& str) {
-		//ŒÄ‚Ño‚µ1‰ñ–Ú(•¶š—ñ”‚ğ“¾‚é)
+		//å‘¼ã³å‡ºã—1å›ç›®(æ–‡å­—åˆ—æ•°ã‚’å¾—ã‚‹)
 		auto num1 = MultiByteToWideChar(CP_ACP,
 			MB_PRECOMPOSED | MB_ERR_INVALID_CHARS,
 			str.c_str(), -1, nullptr, 0);
 
-		std::wstring wstr;//string‚Ìwchar_t”Å
-		wstr.resize(num1);//“¾‚ç‚ê‚½•¶š—ñ”‚ÅƒŠƒTƒCƒY
+		std::wstring wstr;//stringã®wchar_tç‰ˆ
+		wstr.resize(num1);//å¾—ã‚‰ã‚ŒãŸæ–‡å­—åˆ—æ•°ã§ãƒªã‚µã‚¤ã‚º
 
-		//ŒÄ‚Ño‚µ2‰ñ–Ú(Šm•ÛÏ‚İ‚Ìwstr‚É•ÏŠ·•¶š—ñ‚ğƒRƒs[)
+		//å‘¼ã³å‡ºã—2å›ç›®(ç¢ºä¿æ¸ˆã¿ã®wstrã«å¤‰æ›æ–‡å­—åˆ—ã‚’ã‚³ãƒ”ãƒ¼)
 		auto num2 = MultiByteToWideChar(CP_ACP,
 			MB_PRECOMPOSED | MB_ERR_INVALID_CHARS,
 			str.c_str(), -1, &wstr[0], num1);
 
-		assert(num1 == num2);//ˆê‰ƒ`ƒFƒbƒN
+		assert(num1 == num2);//ä¸€å¿œãƒã‚§ãƒƒã‚¯
 		return wstr;
 	}
-	///ƒfƒoƒbƒOƒŒƒCƒ„[‚ğ—LŒø‚É‚·‚é
+	///ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	void EnableDebugLayer() {
 		ComPtr<ID3D12Debug> debugLayer = nullptr;
 		auto result = D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer));
@@ -89,14 +89,14 @@ namespace {
 }
 Dx12Wrapper::Dx12Wrapper(HWND hwnd){
 #ifdef _DEBUG
-	//ƒfƒoƒbƒOƒŒƒCƒ„[‚ğƒIƒ“‚É
+	//ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚ªãƒ³ã«
 	EnableDebugLayer();
 #endif
 
 	auto& app=Application::Instance();
 	_winSize = app.GetWindowSize();
 
-	//DirectX12ŠÖ˜A‰Šú‰»
+	//DirectX12é–¢é€£åˆæœŸåŒ–
 	if (FAILED(InitializeDXGIDevice())) {
 		assert(0);
 		return;
@@ -119,18 +119,18 @@ Dx12Wrapper::Dx12Wrapper(HWND hwnd){
 		return;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒƒ[ƒ_[ŠÖ˜A‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒ¼ãƒ€ãƒ¼é–¢é€£åˆæœŸåŒ–
 	CreateTextureLoaderTable();
 
 
 
-	//[“xƒoƒbƒtƒ@ì¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	if (FAILED(CreateDepthStencilView())) {
 		assert(0);
 		return ;
 	}
 
-	//ƒtƒFƒ“ƒX‚Ìì¬
+	//ãƒ•ã‚§ãƒ³ã‚¹ã®ä½œæˆ
 	if (FAILED(_dev->CreateFence(_fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(_fence.ReleaseAndGetAddressOf())))) {
 		assert(0);
 		return ;
@@ -142,8 +142,8 @@ HRESULT
 Dx12Wrapper::CreateDepthStencilView() {
 	DXGI_SWAP_CHAIN_DESC1 desc = {};
 	auto result = _swapchain->GetDesc1(&desc);
-	//[“xƒoƒbƒtƒ@ì¬
-	//[“xƒoƒbƒtƒ@‚Ìd—l
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ä½œæˆ
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ä»•æ§˜
 	//auto depthResDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
 	//	desc.Width, desc.Height,
 	//	1, 0, 1, 0,
@@ -163,7 +163,7 @@ Dx12Wrapper::CreateDepthStencilView() {
 	resdesc.MipLevels = 1;
 	resdesc.Alignment = 0;
 
-	//ƒfƒvƒX—pƒq[ƒvƒvƒƒpƒeƒB
+	//ãƒ‡ãƒ—ã‚¹ç”¨ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	auto depthHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
 	CD3DX12_CLEAR_VALUE depthClearValue(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
@@ -172,28 +172,28 @@ Dx12Wrapper::CreateDepthStencilView() {
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE, //ƒfƒvƒX‘‚«‚İ‚Ég—p
+		D3D12_RESOURCE_STATE_DEPTH_WRITE, //ãƒ‡ãƒ—ã‚¹æ›¸ãè¾¼ã¿ã«ä½¿ç”¨
 		&depthClearValue,
 		IID_PPV_ARGS(_depthBuffer.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) {
-		//ƒGƒ‰[ˆ—
+		//ã‚¨ãƒ©ãƒ¼å‡¦ç†
 		return result;
 	}
 
-	//[“x‚Ì‚½‚ß‚ÌƒfƒXƒNƒŠƒvƒ^ƒq[ƒvì¬
-	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};//[“x‚Ég‚¤‚æ‚Æ‚¢‚¤–‚ª‚í‚©‚ê‚Î‚¢‚¢
-	dsvHeapDesc.NumDescriptors = 1;//[“xƒrƒ…[1‚Â‚Ì‚İ
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;//ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Æ‚µ‚Äg‚¤
+	//æ·±åº¦ã®ãŸã‚ã®ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ä½œæˆ
+	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};//æ·±åº¦ã«ä½¿ã†ã‚ˆã¨ã„ã†äº‹ãŒã‚ã‹ã‚Œã°ã„ã„
+	dsvHeapDesc.NumDescriptors = 1;//æ·±åº¦ãƒ“ãƒ¥ãƒ¼1ã¤ã®ã¿
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;//ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã¨ã—ã¦ä½¿ã†
 	dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
 
 	result = _dev->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(_dsvHeap.ReleaseAndGetAddressOf()));
 
-	//[“xƒrƒ…[ì¬
+	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//ƒfƒvƒX’l‚É32bitg—p
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;//2DƒeƒNƒXƒ`ƒƒ
-	dsvDesc.Flags = D3D12_DSV_FLAG_NONE;//ƒtƒ‰ƒO‚Í“Á‚É‚È‚µ
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//ãƒ‡ãƒ—ã‚¹å€¤ã«32bitä½¿ç”¨
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
+	dsvDesc.Flags = D3D12_DSV_FLAG_NONE;//ãƒ•ãƒ©ã‚°ã¯ç‰¹ã«ãªã—
 	_dev->CreateDepthStencilView(_depthBuffer.Get(), &dsvDesc, _dsvHeap->GetCPUDescriptorHandleForHeapStart());
 }
 
@@ -207,8 +207,8 @@ ComPtr<ID3D12Resource>
 Dx12Wrapper::GetTextureByPath(const char* texpath) {
 	auto it = _textureTable.find(texpath);
 	if (it != _textureTable.end()) {
-		//ƒe[ƒuƒ‹‚É“à‚É‚ ‚Á‚½‚çƒ[ƒh‚·‚é‚Ì‚Å‚Í‚È‚­ƒ}ƒbƒv“à‚Ì
-		//ƒŠƒ\[ƒX‚ğ•Ô‚·
+		//ãƒ†ãƒ¼ãƒ–ãƒ«ã«å†…ã«ã‚ã£ãŸã‚‰ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã®ã§ã¯ãªããƒãƒƒãƒ—å†…ã®
+		//ãƒªã‚½ãƒ¼ã‚¹ã‚’è¿”ã™
 		return _textureTable[texpath];
 	}
 	else {
@@ -217,7 +217,7 @@ Dx12Wrapper::GetTextureByPath(const char* texpath) {
 
 }
 
-//ƒeƒNƒXƒ`ƒƒƒ[ƒ_ƒe[ƒuƒ‹‚Ìì¬
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒ¼ãƒ€ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ
 void 
 Dx12Wrapper::CreateTextureLoaderTable() {
 	_loadLambdaTable["sph"] = _loadLambdaTable["spa"] = _loadLambdaTable["bmp"] = _loadLambdaTable["png"] = _loadLambdaTable["jpg"] = [](const wstring& path, TexMetadata* meta, ScratchImage& img)->HRESULT {
@@ -232,31 +232,31 @@ Dx12Wrapper::CreateTextureLoaderTable() {
 		return LoadFromDDSFile(path.c_str(), 0, meta, img);
 	};
 }
-//ƒeƒNƒXƒ`ƒƒ–¼‚©‚çƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@ì¬A’†g‚ğƒRƒs[
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£åã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ä½œæˆã€ä¸­èº«ã‚’ã‚³ãƒ”ãƒ¼
 ID3D12Resource* 
 Dx12Wrapper::CreateTextureFromFile(const char* texpath) {
 	string texPath = texpath;
-	//ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 	TexMetadata metadata = {};
 	ScratchImage scratchImg = {};
-	auto wtexpath = GetWideStringFromString(texPath);//ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹ƒpƒX
-	auto ext = GetExtension(texPath);//Šg’£q‚ğæ“¾
+	auto wtexpath = GetWideStringFromString(texPath);//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+	auto ext = GetExtension(texPath);//æ‹¡å¼µå­ã‚’å–å¾—
 	auto result = _loadLambdaTable[ext](wtexpath,
 		&metadata,
 		scratchImg);
 	if (FAILED(result)) {
 		return nullptr;
 	}
-	auto img = scratchImg.GetImage(0, 0, 0);//¶ƒf[ƒ^’Šo
+	auto img = scratchImg.GetImage(0, 0, 0);//ç”Ÿãƒ‡ãƒ¼ã‚¿æŠ½å‡º
 
-	//WriteToSubresource‚Å“]‘—‚·‚é—p‚Ìƒq[ƒvİ’è
+	//WriteToSubresourceã§è»¢é€ã™ã‚‹ç”¨ã®ãƒ’ãƒ¼ãƒ—è¨­å®š
 	auto texHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
 	auto resDesc = CD3DX12_RESOURCE_DESC::Tex2D(metadata.format, metadata.width, metadata.height, metadata.arraySize, metadata.mipLevels);
 
 	ID3D12Resource* texbuff = nullptr;
 	result = _dev->CreateCommittedResource(
 		&texHeapProp,
-		D3D12_HEAP_FLAG_NONE,//“Á‚Éw’è‚È‚µ
+		D3D12_HEAP_FLAG_NONE,//ç‰¹ã«æŒ‡å®šãªã—
 		&resDesc,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		nullptr,
@@ -267,10 +267,10 @@ Dx12Wrapper::CreateTextureFromFile(const char* texpath) {
 		return nullptr;
 	}
 	result = texbuff->WriteToSubresource(0,
-		nullptr,//‘S—Ìˆæ‚ÖƒRƒs[
-		img->pixels,//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-		img->rowPitch,//1ƒ‰ƒCƒ“ƒTƒCƒY
-		img->slicePitch//‘SƒTƒCƒY
+		nullptr,//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+		img->pixels,//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+		img->rowPitch,//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+		img->slicePitch//å…¨ã‚µã‚¤ã‚º
 	);
 	if (FAILED(result)) {
 		return nullptr;
@@ -284,8 +284,8 @@ Dx12Wrapper::InitializeDXGIDevice() {
 	UINT flagsDXGI = 0;
 	flagsDXGI |= DXGI_CREATE_FACTORY_DEBUG;
 	auto result = CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(_dxgiFactory.ReleaseAndGetAddressOf()));
-	//DirectX12‚Ü‚í‚è‰Šú‰»
-	//ƒtƒB[ƒ`ƒƒƒŒƒxƒ‹—ñ‹“
+	//DirectX12ã¾ã‚ã‚ŠåˆæœŸåŒ–
+	//ãƒ•ã‚£ãƒ¼ãƒãƒ£ãƒ¬ãƒ™ãƒ«åˆ—æŒ™
 	D3D_FEATURE_LEVEL levels[] = {
 		D3D_FEATURE_LEVEL_12_1,
 		D3D_FEATURE_LEVEL_12_0,
@@ -310,7 +310,7 @@ Dx12Wrapper::InitializeDXGIDevice() {
 		}
 	}
 	result = S_FALSE;
-	//Direct3DƒfƒoƒCƒX‚Ì‰Šú‰»
+	//Direct3Dãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 	D3D_FEATURE_LEVEL featureLevel;
 	for (auto l : levels) {
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, l, IID_PPV_ARGS(_dev.ReleaseAndGetAddressOf())))) {
@@ -322,7 +322,7 @@ Dx12Wrapper::InitializeDXGIDevice() {
 	return result;
 }
 
-///ƒXƒƒbƒvƒ`ƒFƒCƒ“¶¬ŠÖ”
+///ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ç”Ÿæˆé–¢æ•°
 HRESULT
 Dx12Wrapper::CreateSwapChain(const HWND& hwnd) {
 	RECT rc = {};
@@ -354,7 +354,7 @@ Dx12Wrapper::CreateSwapChain(const HWND& hwnd) {
 	return result;
 }
 
-//ƒRƒ}ƒ“ƒh‚Ü‚í‚è‰Šú‰»
+//ã‚³ãƒãƒ³ãƒ‰ã¾ã‚ã‚ŠåˆæœŸåŒ–
 HRESULT 
 Dx12Wrapper::InitializeCommand() {
 	auto result = _dev->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(_cmdAllocator.ReleaseAndGetAddressOf()));
@@ -369,22 +369,22 @@ Dx12Wrapper::InitializeCommand() {
 	}
 
 	D3D12_COMMAND_QUEUE_DESC cmdQueueDesc = {};
-	cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;//ƒ^ƒCƒ€ƒAƒEƒg‚È‚µ
+	cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;//ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãªã—
 	cmdQueueDesc.NodeMask = 0;
-	cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;//ƒvƒ‰ƒCƒIƒŠƒeƒB“Á‚Éw’è‚È‚µ
-	cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;//‚±‚±‚ÍƒRƒ}ƒ“ƒhƒŠƒXƒg‚Æ‡‚í‚¹‚Ä‚­‚¾‚³‚¢
-	result = _dev->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(_cmdQueue.ReleaseAndGetAddressOf()));//ƒRƒ}ƒ“ƒhƒLƒ…[¶¬
+	cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;//ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ç‰¹ã«æŒ‡å®šãªã—
+	cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;//ã“ã“ã¯ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã¨åˆã‚ã›ã¦ãã ã•ã„
+	result = _dev->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(_cmdQueue.ReleaseAndGetAddressOf()));//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ç”Ÿæˆ
 	assert(SUCCEEDED(result));
 	return result;
 }
 
-//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“—pƒrƒ…[‚Ì¶¬
+//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ç”¨ãƒ“ãƒ¥ãƒ¼ã®ç”Ÿæˆ
 HRESULT 
 Dx12Wrapper::CreateSceneView(){
 	DXGI_SWAP_CHAIN_DESC1 desc = {};
 	auto result = _swapchain->GetDesc1(&desc);
 
-	//’è”ƒoƒbƒtƒ@ì¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	result = _dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -399,34 +399,34 @@ Dx12Wrapper::CreateSceneView(){
 		return result;
 	}
 
-	_mappedSceneData = nullptr;//ƒ}ƒbƒvæ‚ğ¦‚·ƒ|ƒCƒ“ƒ^
-	result = _sceneConstBuff->Map(0, nullptr, (void**)&_mappedSceneData);//ƒ}ƒbƒv
+	_mappedSceneData = nullptr;//ãƒãƒƒãƒ—å…ˆã‚’ç¤ºã™ãƒã‚¤ãƒ³ã‚¿
+	result = _sceneConstBuff->Map(0, nullptr, (void**)&_mappedSceneData);//ãƒãƒƒãƒ—
 	
 	XMFLOAT3 eye(0, 15, -30);
 	XMFLOAT3 target(0, 10, 0);
 	XMFLOAT3 up(0, 1, 0);
 	_mappedSceneData->view = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-	_mappedSceneData->proj = XMMatrixPerspectiveFovLH(XM_PIDIV4,//‰æŠp‚Í45‹
-		static_cast<float>(desc.Width) / static_cast<float>(desc.Height),//ƒAƒX”ä
-		0.1f,//‹ß‚¢•û
-		1000.0f//‰“‚¢•û
+	_mappedSceneData->proj = XMMatrixPerspectiveFovLH(XM_PIDIV4,//ç”»è§’ã¯45Â°
+		static_cast<float>(desc.Width) / static_cast<float>(desc.Height),//ã‚¢ã‚¹æ¯”
+		0.1f,//è¿‘ã„æ–¹
+		1000.0f//é ã„æ–¹
 	);						
 	_mappedSceneData->eye = eye;
 	
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
-	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ƒVƒF[ƒ_‚©‚çŒ©‚¦‚é‚æ‚¤‚É
-	descHeapDesc.NodeMask = 0;//ƒ}ƒXƒN‚Í0
+	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹ã‚ˆã†ã«
+	descHeapDesc.NodeMask = 0;//ãƒã‚¹ã‚¯ã¯0
 	descHeapDesc.NumDescriptors = 1;//
-	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒví•Ê
-	result = _dev->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(_sceneDescHeap.ReleaseAndGetAddressOf()));//¶¬
+	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç¨®åˆ¥
+	result = _dev->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(_sceneDescHeap.ReleaseAndGetAddressOf()));//ç”Ÿæˆ
 
-	////ƒfƒXƒNƒŠƒvƒ^‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾‚µ‚Ä‚¨‚­
+	////ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã®å…ˆé ­ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã—ã¦ãŠã
 	auto heapHandle = _sceneDescHeap->GetCPUDescriptorHandleForHeapStart();
 	
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
 	cbvDesc.BufferLocation = _sceneConstBuff->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = _sceneConstBuff->GetDesc().Width;
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	_dev->CreateConstantBufferView(&cbvDesc, heapHandle);
 	return result;
 
@@ -438,10 +438,10 @@ Dx12Wrapper::CreateFinalRenderTargets() {
 	auto result = _swapchain->GetDesc1(&desc);
 
 	D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
-	heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚È‚Ì‚Å“–‘RRTV
+	heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ãªã®ã§å½“ç„¶RTV
 	heapDesc.NodeMask = 0;
-	heapDesc.NumDescriptors = 2;//•\— ‚Ì‚Q‚Â
-	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;//“Á‚Éw’è‚È‚µ
+	heapDesc.NumDescriptors = 2;//è¡¨è£ã®ï¼’ã¤
+	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;//ç‰¹ã«æŒ‡å®šãªã—
 
 	result = _dev->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(_rtvHeaps.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) {
@@ -454,7 +454,7 @@ Dx12Wrapper::CreateFinalRenderTargets() {
 
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = _rtvHeaps->GetCPUDescriptorHandleForHeapStart();
 
-	//SRGBƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[İ’è
+	//SRGBãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼è¨­å®š
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -487,8 +487,8 @@ Dx12Wrapper::Update() {
 
 void
 Dx12Wrapper::BeginDraw() {
-	//DirectXˆ—
-	//ƒoƒbƒNƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	//DirectXå‡¦ç†
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
 	auto bbIdx = _swapchain->GetCurrentBackBufferIndex();
 
 	_cmdList->ResourceBarrier(1,
@@ -496,21 +496,21 @@ Dx12Wrapper::BeginDraw() {
 			D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğw’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’æŒ‡å®š
 	auto rtvH = _rtvHeaps->GetCPUDescriptorHandleForHeapStart();
 	rtvH.ptr += bbIdx * _dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-	//[“x‚ğw’è
+	//æ·±åº¦ã‚’æŒ‡å®š
 	auto dsvH = _dsvHeap->GetCPUDescriptorHandleForHeapStart();
 	_cmdList->OMSetRenderTargets(1, &rtvH, false, &dsvH);
 	_cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 
-	//‰æ–ÊƒNƒŠƒA
-	float clearColor[] = { 0.5f,0.5f,0.5f,1.0f };//”’F
+	//ç”»é¢ã‚¯ãƒªã‚¢
+	float clearColor[] = { 0.5f,0.5f,0.5f,1.0f };//ç™½è‰²
 	_cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
 
-	//ƒrƒ…[ƒ|[ƒgAƒVƒU[‹éŒ`‚ÌƒZƒbƒg
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã€ã‚·ã‚¶ãƒ¼çŸ©å½¢ã®ã‚»ãƒƒãƒˆ
 	_cmdList->RSSetViewports(1, _viewport.get());
 	_cmdList->RSSetScissorRects(1, _scissorrect.get());
 
@@ -519,7 +519,7 @@ Dx12Wrapper::BeginDraw() {
 
 void 
 Dx12Wrapper::SetScene() {
-	//Œ»İ‚ÌƒV[ƒ“(ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“)‚ğƒZƒbƒg
+	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³(ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³)ã‚’ã‚»ãƒƒãƒˆ
 	ID3D12DescriptorHeap* sceneheaps[] = { _sceneDescHeap.Get() };
 	_cmdList->SetDescriptorHeaps(1, sceneheaps);
 	_cmdList->SetGraphicsRootDescriptorTable(0, _sceneDescHeap->GetGPUDescriptorHandleForHeapStart());
@@ -542,12 +542,12 @@ Dx12Wrapper::EndDraw() {
 void Dx12Wrapper::ExecuteCommand()
 {
 
-	//–½—ß‚ÌƒNƒ[ƒY
+	//å‘½ä»¤ã®ã‚¯ãƒ­ãƒ¼ã‚º
 	_cmdList->Close();
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å®Ÿè¡Œ
 	ID3D12CommandList* cmdlists[] = { _cmdList.Get() };
 	_cmdQueue->ExecuteCommandLists(1, cmdlists);
-	////‘Ò‚¿
+	////å¾…ã¡
 	_cmdQueue->Signal(_fence.Get(), ++_fenceVal);
 
 	if (_fence->GetCompletedValue() < _fenceVal) {
@@ -556,8 +556,8 @@ void Dx12Wrapper::ExecuteCommand()
 		WaitForSingleObject(event, INFINITE);
 		CloseHandle(event);
 	}
-	_cmdAllocator->Reset();//ƒLƒ…[‚ğƒNƒŠƒA
-	_cmdList->Reset(_cmdAllocator.Get(), nullptr);//Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ‚½‚ß‚é€”õ
+	_cmdAllocator->Reset();//ã‚­ãƒ¥ãƒ¼ã‚’ã‚¯ãƒªã‚¢
+	_cmdList->Reset(_cmdAllocator.Get(), nullptr);//å†ã³ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ãŸã‚ã‚‹æº–å‚™
 }
 
 ComPtr < IDXGISwapChain4> 

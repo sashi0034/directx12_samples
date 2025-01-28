@@ -2,18 +2,18 @@
 
 
 SamplerState smp : register(s0);
-Texture2D<float4> tex : register(t0);//’ÊíƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> distTex : register(t1);//˜c‚İƒeƒNƒXƒ`ƒƒ
+Texture2D<float4> tex : register(t0);//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> distTex : register(t1);//æ­ªã¿ãƒ†ã‚¯ã‚¹ãƒãƒ£
 
-//[“x’lŒŸØ—p
-Texture2D<float> depthTex : register(t2);//ƒfƒvƒX
-Texture2D<float> lightDepthTex : register(t3);//ƒ‰ƒCƒgƒfƒvƒX
+//æ·±åº¦å€¤æ¤œè¨¼ç”¨
+Texture2D<float> depthTex : register(t2);//ãƒ‡ãƒ—ã‚¹
+Texture2D<float> lightDepthTex : register(t3);//ãƒ©ã‚¤ãƒˆãƒ‡ãƒ—ã‚¹
 
 
 cbuffer Weights : register(b0) {
-	//CPU‚©‚çfloat[8]‚Å“n‚³‚ê‚½‚à‚Ì‚ğ
-	//³‚µ‚­ó‚¯æ‚ë‚¤‚Æ‚·‚é‚Æfloat4[2]‚É
-	//‚¹‚´‚é‚ğ“¾‚È‚¢‚½‚ß«‚Ì‚æ‚¤‚È‘‚«•û‚É‚È‚é
+	//CPUã‹ã‚‰float[8]ã§æ¸¡ã•ã‚ŒãŸã‚‚ã®ã‚’
+	//æ­£ã—ãå—ã‘å–ã‚ã†ã¨ã™ã‚‹ã¨float4[2]ã«
+	//ã›ã–ã‚‹ã‚’å¾—ãªã„ãŸã‚â†“ã®ã‚ˆã†ãªæ›¸ãæ–¹ã«ãªã‚‹
 	float4 wgts[2];
 };
 

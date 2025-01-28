@@ -17,8 +17,8 @@ float4 VerticalBokehPS(PeraType input) : SV_TARGET{
 	float4 ret = float4(0, 0, 0, 0);
 	float2 nmTex= distTex.Sample(smp, input.uv).xy;
 	nmTex = nmTex * 2.0f - 1.0f;
-	//nmTex‚Ì”ÍˆÍ‚Í-1`1‚¾‚ªA•1‚ªƒeƒNƒXƒ`ƒƒ‚P–‡‚Ì
-	//‘å‚«‚³‚Å‚ ‚è-1`1‚Å‚Í‚ä‚ª‚İ‚·‚¬‚é‚½‚ß0.1‚ğæZ‚µ‚Ä‚¢‚é
+	//nmTexã®ç¯„å›²ã¯-1ã€œ1ã ãŒã€å¹…1ãŒãƒ†ã‚¯ã‚¹ãƒãƒ£ï¼‘æšã®
+	//å¤§ãã•ã§ã‚ã‚Š-1ã€œ1ã§ã¯ã‚†ãŒã¿ã™ãã‚‹ãŸã‚0.1ã‚’ä¹—ç®—ã—ã¦ã„ã‚‹
 	return tex.Sample(smp, input.uv+nmTex*0.1f);
 
 	float4 col = tex.Sample(smp, input.uv);
@@ -57,12 +57,12 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 	}
 	return float4(ret.rgb,col.a);
 
-	ret += tex.Sample(smp, input.uv + float2(0, -2 * dy))*-1;//ã
-	ret += tex.Sample(smp, input.uv + float2(-2 * dx, 0))*-1;//¶
-	ret += tex.Sample(smp, input.uv) * 4;//©•ª
-	ret += tex.Sample(smp, input.uv + float2(2 * dx, 0))*-1;//‰E
-	ret += tex.Sample(smp, input.uv + float2(0, 2 * dy))*-1;//‰º
-	//‚±‚±‚Å”½“]
+	ret += tex.Sample(smp, input.uv + float2(0, -2 * dy))*-1;//ä¸Š
+	ret += tex.Sample(smp, input.uv + float2(-2 * dx, 0))*-1;//å·¦
+	ret += tex.Sample(smp, input.uv) * 4;//è‡ªåˆ†
+	ret += tex.Sample(smp, input.uv + float2(2 * dx, 0))*-1;//å³
+	ret += tex.Sample(smp, input.uv + float2(0, 2 * dy))*-1;//ä¸‹
+	//ã“ã“ã§åè»¢
 	float Y = dot(ret.rgb, float3(0.299, 0.587, 0.114));
 	Y = pow(1.0f - Y, 30.0f);
 	Y = step(0.2, Y);
@@ -70,32 +70,32 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 	
 
 
-	//¡‚ÌƒsƒNƒZƒ‹‚ğ’†S‚Éc‰¡5‚Â‚¸‚Â‚É‚È‚é‚æ‚¤‰ÁZ‚·‚é
-	//Åã’i
+	//ä»Šã®ãƒ”ã‚¯ã‚»ãƒ«ã‚’ä¸­å¿ƒã«ç¸¦æ¨ª5ã¤ãšã¤ã«ãªã‚‹ã‚ˆã†åŠ ç®—ã™ã‚‹
+	//æœ€ä¸Šæ®µ
 	ret += tex.Sample(smp, input.uv + float2(-2 * dx, 2 * dy)) * 1 / 256;
 	ret += tex.Sample(smp, input.uv + float2(-1 * dx, 2 * dy)) * 4 / 256;
 	ret += tex.Sample(smp, input.uv + float2(0 * dx, 2 * dy)) * 6 / 256;
 	ret += tex.Sample(smp, input.uv + float2(1 * dx, 2 * dy)) * 4 / 256;
 	ret += tex.Sample(smp, input.uv + float2(2 * dx, 2 * dy)) * 1 / 256;
-	//‚Ğ‚Æ‚Âã’i
+	//ã²ã¨ã¤ä¸Šæ®µ
 	ret += tex.Sample(smp, input.uv + float2(-2 * dx, 1 * dy)) * 4 / 256;
 	ret += tex.Sample(smp, input.uv + float2(-1 * dx, 1 * dy)) * 16 / 256;
 	ret += tex.Sample(smp, input.uv + float2(0 * dx, 1 * dy)) * 24 / 256;
 	ret += tex.Sample(smp, input.uv + float2(1 * dx, 1 * dy)) * 16 / 256;
 	ret += tex.Sample(smp, input.uv + float2(2 * dx, 1 * dy)) * 4 / 256;
-	//’†S—ñ
+	//ä¸­å¿ƒåˆ—
 	ret += tex.Sample(smp, input.uv + float2(-2 * dx, 0 * dy)) * 6 / 256;
 	ret += tex.Sample(smp, input.uv + float2(-1 * dx, 0 * dy)) * 24 / 256;
 	ret += tex.Sample(smp, input.uv + float2(0 * dx, 0 * dy)) * 36 / 256;
 	ret += tex.Sample(smp, input.uv + float2(1 * dx, 0 * dy)) * 24 / 256;
 	ret += tex.Sample(smp, input.uv + float2(2 * dx, 0 * dy)) * 6 / 256;
-	//ˆê‚Â‰º’i
+	//ä¸€ã¤ä¸‹æ®µ
 	ret += tex.Sample(smp, input.uv + float2(-2 * dx, -1 * dy)) * 4 / 256;
 	ret += tex.Sample(smp, input.uv + float2(-1 * dx, -1 * dy)) * 16 / 256;
 	ret += tex.Sample(smp, input.uv + float2(0 * dx, -1 * dy)) * 24 / 256;
 	ret += tex.Sample(smp, input.uv + float2(1 * dx, -1 * dy)) * 16 / 256;
 	ret += tex.Sample(smp, input.uv + float2(2 * dx, -1 * dy)) * 4 / 256;
-	//Å‰º’i
+	//æœ€ä¸‹æ®µ
 	ret += tex.Sample(smp, input.uv + float2(-2 * dx, -2 * dy)) * 1 / 256;
 	ret += tex.Sample(smp, input.uv + float2(-1 * dx, -2 * dy)) * 4 / 256;
 	ret += tex.Sample(smp, input.uv + float2(0 * dx, -2 * dy)) * 6 / 256;

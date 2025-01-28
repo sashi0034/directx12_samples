@@ -1,6 +1,6 @@
 #include"BasicType.hlsli"
 BasicType BasicVS(float4 pos : POSITION,float2 uv:TEXCOORD) {
-	BasicType output;//ピクセルシェーダへ渡す値
+	BasicType output;//繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝縺ｸ貂｡縺吝､
 	output.svpos = pos;
 	output.uv = uv;
 	return output;

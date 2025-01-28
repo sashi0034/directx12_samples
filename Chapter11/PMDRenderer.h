@@ -15,22 +15,22 @@ private:
 	template<typename T>
 	using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr< ID3D12PipelineState> _pipeline = nullptr;//PMD—pƒpƒCƒvƒ‰ƒCƒ“
-	ComPtr< ID3D12RootSignature> _rootSignature = nullptr;//PMD—pƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	ComPtr< ID3D12PipelineState> _pipeline = nullptr;//PMDç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
+	ComPtr< ID3D12RootSignature> _rootSignature = nullptr;//PMDç”¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 
-	//PMD—p‹¤’ÊƒeƒNƒXƒ`ƒƒ(”’A•AƒOƒŒƒCƒXƒP[ƒ‹ƒOƒ‰ƒf[ƒVƒ‡ƒ“)
+	//PMDç”¨å…±é€šãƒ†ã‚¯ã‚¹ãƒãƒ£(ç™½ã€é»’ã€ã‚°ãƒ¬ã‚¤ã‚¹ã‚±ãƒ¼ãƒ«ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³)
 	ComPtr<ID3D12Resource> _whiteTex = nullptr;
 	ComPtr<ID3D12Resource> _blackTex = nullptr;
 	ComPtr<ID3D12Resource> _gradTex = nullptr;
 
 	ID3D12Resource* CreateDefaultTexture(size_t width,size_t height);
-	ID3D12Resource* CreateWhiteTexture();//”’ƒeƒNƒXƒ`ƒƒ‚Ì¶¬
-	ID3D12Resource*	CreateBlackTexture();//•ƒeƒNƒXƒ`ƒƒ‚Ì¶¬
-	ID3D12Resource*	CreateGrayGradationTexture();//ƒOƒŒ[ƒeƒNƒXƒ`ƒƒ‚Ì¶¬
+	ID3D12Resource* CreateWhiteTexture();//ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+	ID3D12Resource*	CreateBlackTexture();//é»’ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+	ID3D12Resource*	CreateGrayGradationTexture();//ã‚°ãƒ¬ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
 
-	//ƒpƒCƒvƒ‰ƒCƒ“‰Šú‰»
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³åˆæœŸåŒ–
 	HRESULT CreateGraphicsPipelineForPMD();
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‰Šú‰»
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£åˆæœŸåŒ–
 	HRESULT CreateRootSignature();
 
 	bool CheckShaderCompileResult(HRESULT result , ID3DBlob* error=nullptr);

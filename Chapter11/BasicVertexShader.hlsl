@@ -1,82 +1,82 @@
 #include"BasicType.hlsli"
-Texture2D<float4> tex:register(t0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒx[ƒX)
-Texture2D<float4> sph:register(t1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(æZ)
-Texture2D<float4> spa:register(t2);//2”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(‰ÁZ)
-Texture2D<float4> toon:register(t3);//3”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒgƒD[ƒ“)
+Texture2D<float4> tex:register(t0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒ™ãƒ¼ã‚¹)
+Texture2D<float4> sph:register(t1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ä¹—ç®—)
+Texture2D<float4> spa:register(t2);//2ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(åŠ ç®—)
+Texture2D<float4> toon:register(t3);//3ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒˆã‚¥ãƒ¼ãƒ³)
 
-SamplerState smp:register(s0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
-SamplerState smpToon:register(s1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
+SamplerState smp:register(s0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
+SamplerState smpToon:register(s1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
 
-//’è”ƒoƒbƒtƒ@0
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡0
 cbuffer SceneData : register(b0) {
 	matrix view;
-	matrix proj;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	matrix proj;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	float3 eye;
 };
 cbuffer Transform : register(b1) {
-	matrix world;//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	matrix bones[256];//ƒ{[ƒ“s—ñ
+	matrix world;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
+	matrix bones[256];//ãƒœãƒ¼ãƒ³è¡Œåˆ—
 }
 
-//’è”ƒoƒbƒtƒ@1
-//ƒ}ƒeƒŠƒAƒ‹—p
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡1
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
 cbuffer Material : register(b2) {
-	float4 diffuse;//ƒfƒBƒtƒ…[ƒYF
-	float4 specular;//ƒXƒyƒLƒ…ƒ‰
-	float3 ambient;//ƒAƒ“ƒrƒGƒ“ƒg
+	float4 diffuse;//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	float4 specular;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©
+	float3 ambient;//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
 };
 
-//’¸“_ƒVƒF[ƒ_¨ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö‚Ì‚â‚èæ‚è‚Ég—p‚·‚é
-//\‘¢‘Ì
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€â†’ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸ã®ã‚„ã‚Šå–ã‚Šã«ä½¿ç”¨ã™ã‚‹
+//æ§‹é€ ä½“
 struct Output {
-	float4 svpos:SV_POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 pos:POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 normal:NORMAL0;//–@üƒxƒNƒgƒ‹
-	float4 vnormal:NORMAL1;//–@üƒxƒNƒgƒ‹
-	float2 uv:TEXCOORD;//UV’l
-	float3 ray:VECTOR;//ƒxƒNƒgƒ‹
+	float4 svpos:SV_POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 pos:POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 normal:NORMAL0;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float4 vnormal:NORMAL1;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float2 uv:TEXCOORD;//UVå€¤
+	float3 ray:VECTOR;//ãƒ™ã‚¯ãƒˆãƒ«
 };
 
 Output BasicVS(float4 pos : POSITION , float4 normal : NORMAL, float2 uv : TEXCOORD, min16uint2 boneno : BONENO, min16uint weight:WEIGHT) {
-	Output output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
+	Output output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
 	float w = (float)weight / 100.0f;
 	matrix bm = bones[boneno[0]] * w + bones[boneno[1]] * (1.0f - w);
 	pos = mul(bm, pos);
 	pos = mul(world, pos);
-	output.svpos = mul(mul(proj,view),pos);//ƒVƒF[ƒ_‚Å‚Í—ñ—Dæ‚È‚Ì‚Å’ˆÓ
+	output.svpos = mul(mul(proj,view),pos);//ã‚·ã‚§ãƒ¼ãƒ€ã§ã¯åˆ—å„ªå…ˆãªã®ã§æ³¨æ„
 	output.pos = mul(view, pos);
-	normal.w = 0;//‚±‚±d—v(•½sˆÚ“®¬•ª‚ğ–³Œø‚É‚·‚é)
-	output.normal = mul(world,normal);//–@ü‚É‚àƒ[ƒ‹ƒh•ÏŠ·‚ğs‚¤
+	normal.w = 0;//ã“ã“é‡è¦(å¹³è¡Œç§»å‹•æˆåˆ†ã‚’ç„¡åŠ¹ã«ã™ã‚‹)
+	output.normal = mul(world,normal);//æ³•ç·šã«ã‚‚ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã‚’è¡Œã†
 	output.vnormal = mul(view, output.normal);
 	output.uv = uv;
-	output.ray = normalize(output.pos.xyz - mul(view,eye));//‹üƒxƒNƒgƒ‹
+	output.ray = normalize(output.pos.xyz - mul(view,eye));//è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	return output;
 }
 
 float4 BasicPS(Output input) : SV_TARGET{
-	float3 light = normalize(float3(1,-1,1));//Œõ‚ÌŒü‚©‚¤ƒxƒNƒgƒ‹(•½sŒõü)
-	float3 lightColor = float3(1,1,1);//ƒ‰ƒCƒg‚ÌƒJƒ‰[(1,1,1‚Å^‚Á”’)
+	float3 light = normalize(float3(1,-1,1));//å…‰ã®å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«(å¹³è¡Œå…‰ç·š)
+	float3 lightColor = float3(1,1,1);//ãƒ©ã‚¤ãƒˆã®ã‚«ãƒ©ãƒ¼(1,1,1ã§çœŸã£ç™½)
 
-	//ƒfƒBƒtƒ…[ƒYŒvZ
+	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè¨ˆç®—
 	float diffuseB = saturate(dot(-light, input.normal));
 	float4 toonDif = toon.Sample(smpToon, float2(0, 1.0 - diffuseB));
 
-	//Œõ‚Ì”½ËƒxƒNƒgƒ‹
+	//å…‰ã®åå°„ãƒ™ã‚¯ãƒˆãƒ«
 	float3 refLight = normalize(reflect(light, input.normal.xyz));
 	float specularB = pow(saturate(dot(refLight, -input.ray)),specular.a);
 
-	//ƒXƒtƒBƒAƒ}ƒbƒv—pUV
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ç”¨UV
 	float2 sphereMapUV = input.vnormal.xy;
 	sphereMapUV = (sphereMapUV + float2(1, -1)) * float2(0.5, -0.5);
 
 	float4 ambCol = float4(ambient*0.6, 1);
-	float4 texColor = tex.Sample(smp, input.uv); //ƒeƒNƒXƒ`ƒƒƒJƒ‰[
-	return saturate((toonDif//‹P“x(ƒgƒD[ƒ“)
-		* diffuse + ambCol*0.5)//ƒfƒBƒtƒ…[ƒYF
-		*texColor//ƒeƒNƒXƒ`ƒƒƒJƒ‰[
-		*sph.Sample(smp, sphereMapUV)//ƒXƒtƒBƒAƒ}ƒbƒv(æZ)
-		+ spa.Sample(smp, sphereMapUV)//ƒXƒtƒBƒAƒ}ƒbƒv(‰ÁZ)
-		+ float4(specularB *specular.rgb, 1)//ƒXƒyƒLƒ…ƒ‰[
+	float4 texColor = tex.Sample(smp, input.uv); //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚«ãƒ©ãƒ¼
+	return saturate((toonDif//è¼åº¦(ãƒˆã‚¥ãƒ¼ãƒ³)
+		* diffuse + ambCol*0.5)//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+		*texColor//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚«ãƒ©ãƒ¼
+		*sph.Sample(smp, sphereMapUV)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(ä¹—ç®—)
+		+ spa.Sample(smp, sphereMapUV)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(åŠ ç®—)
+		+ float4(specularB *specular.rgb, 1)//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼
 		);
 }

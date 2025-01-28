@@ -10,12 +10,12 @@
 #include<unordered_map>
 
 struct PrimitiveVertex {
-	DirectX::XMFLOAT3 pos;//À•W
-	DirectX::XMFLOAT3 normal;//–@üƒxƒNƒgƒ‹
+	DirectX::XMFLOAT3 pos;//åº§æ¨™
+	DirectX::XMFLOAT3 normal;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 };
 
 using Microsoft::WRL::ComPtr;
-//ƒvƒŠƒ~ƒeƒBƒuŒ`óƒIƒuƒWƒFƒNƒgŠî’êƒNƒ‰ƒX
+//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŸºåº•ã‚¯ãƒ©ã‚¹
 class PrimitiveActor
 {
 public:

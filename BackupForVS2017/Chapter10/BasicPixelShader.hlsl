@@ -1,44 +1,44 @@
 #include"BasicType.hlsli"
-Texture2D<float4> tex:register(t0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒx[ƒX)
-Texture2D<float4> sph:register(t1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(æZ)
-Texture2D<float4> spa:register(t2);//2”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(‰ÁZ)
-Texture2D<float4> toon:register(t3);//3”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒgƒD[ƒ“)
+Texture2D<float4> tex:register(t0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒ™ãƒ¼ã‚¹)
+Texture2D<float4> sph:register(t1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ä¹—ç®—)
+Texture2D<float4> spa:register(t2);//2ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(åŠ ç®—)
+Texture2D<float4> toon:register(t3);//3ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒˆã‚¥ãƒ¼ãƒ³)
 
-SamplerState smp:register(s0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
-SamplerState smpToon:register(s1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
+SamplerState smp:register(s0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
+SamplerState smpToon:register(s1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
 
-//’è”ƒoƒbƒtƒ@1
-//ƒ}ƒeƒŠƒAƒ‹—p
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡1
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
 cbuffer Material : register(b2) {
-	float4 diffuse;//ƒfƒBƒtƒ…[ƒYF
-	float4 specular;//ƒXƒyƒLƒ…ƒ‰
-	float3 ambient;//ƒAƒ“ƒrƒGƒ“ƒg
+	float4 diffuse;//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	float4 specular;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©
+	float3 ambient;//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
 };
 
 
 float4 BasicPS(BasicType input) : SV_TARGET{
-	float3 light = normalize(float3(1,-1,1));//Œõ‚ÌŒü‚©‚¤ƒxƒNƒgƒ‹(•½sŒõü)
-	float3 lightColor = float3(1,1,1);//ƒ‰ƒCƒg‚ÌƒJƒ‰[(1,1,1‚Å^‚Á”’)
+	float3 light = normalize(float3(1,-1,1));//å…‰ã®å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«(å¹³è¡Œå…‰ç·š)
+	float3 lightColor = float3(1,1,1);//ãƒ©ã‚¤ãƒˆã®ã‚«ãƒ©ãƒ¼(1,1,1ã§çœŸã£ç™½)
 
-	//ƒfƒBƒtƒ…[ƒYŒvZ
+	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè¨ˆç®—
 	float diffuseB = saturate(dot(-light, input.normal));
 	float4 toonDif = toon.Sample(smpToon, float2(0, 1.0 - diffuseB));
 
-	//Œõ‚Ì”½ËƒxƒNƒgƒ‹
+	//å…‰ã®åå°„ãƒ™ã‚¯ãƒˆãƒ«
 	float3 refLight = normalize(reflect(light, input.normal.xyz));
 	float specularB = pow(saturate(dot(refLight, -input.ray)),specular.a);
 
-	//ƒXƒtƒBƒAƒ}ƒbƒv—pUV
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ç”¨UV
 	float2 sphereMapUV = input.vnormal.xy;
 	sphereMapUV = (sphereMapUV + float2(1, -1)) * float2(0.5, -0.5);
 
 	float4 ambCol = float4(ambient*0.6, 1);
-	float4 texColor = tex.Sample(smp, input.uv); //ƒeƒNƒXƒ`ƒƒƒJƒ‰[
-	return saturate((toonDif//‹P“x(ƒgƒD[ƒ“)
-		* diffuse + ambCol)//ƒfƒBƒtƒ…[ƒYF
-		*texColor//ƒeƒNƒXƒ`ƒƒƒJƒ‰[
-		*sph.Sample(smp, sphereMapUV)//ƒXƒtƒBƒAƒ}ƒbƒv(æZ)
-		+ spa.Sample(smp, sphereMapUV)//ƒXƒtƒBƒAƒ}ƒbƒv(‰ÁZ)
-		+ float4(specularB *specular.rgb, 1)//ƒXƒyƒLƒ…ƒ‰[
+	float4 texColor = tex.Sample(smp, input.uv); //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚«ãƒ©ãƒ¼
+	return saturate((toonDif//è¼åº¦(ãƒˆã‚¥ãƒ¼ãƒ³)
+		* diffuse + ambCol)//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+		*texColor//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚«ãƒ©ãƒ¼
+		*sph.Sample(smp, sphereMapUV)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(ä¹—ç®—)
+		+ spa.Sample(smp, sphereMapUV)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(åŠ ç®—)
+		+ float4(specularB *specular.rgb, 1)//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼
 		);
 }

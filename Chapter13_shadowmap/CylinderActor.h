@@ -1,7 +1,7 @@
 #pragma once
 #include "PrimitiveActor.h"
 
-///‰~’ŒƒIƒuƒWƒFƒNƒg
+///å††æŸ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 class CylinderActor :
 	public PrimitiveActor
 {

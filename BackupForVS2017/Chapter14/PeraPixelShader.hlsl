@@ -1,22 +1,22 @@
 #include"Type.hlsli"
-Texture2D<float4> tex : register(t0);//’ÊíƒJƒ‰[
-Texture2D<float4> texNormal : register(t1);//–@ü
-Texture2D<float4> texHighLum : register(t2);//‚‹P“x
-Texture2D<float4> texShrinkHighLum : register(t3);//k¬ƒoƒbƒtƒ@‚‹P“x
-Texture2D<float4> texShrink : register(t4);//k¬ƒoƒbƒtƒ@’Êí
+Texture2D<float4> tex : register(t0);//é€šå¸¸ã‚«ãƒ©ãƒ¼
+Texture2D<float4> texNormal : register(t1);//æ³•ç·š
+Texture2D<float4> texHighLum : register(t2);//é«˜è¼åº¦
+Texture2D<float4> texShrinkHighLum : register(t3);//ç¸®å°ãƒãƒƒãƒ•ã‚¡é«˜è¼åº¦
+Texture2D<float4> texShrink : register(t4);//ç¸®å°ãƒãƒƒãƒ•ã‚¡é€šå¸¸
 
 Texture2D<float4> distTex : register(t5);
 
-//[“x’lŒŸØ—p
-Texture2D<float> depthTex : register(t6);//ƒfƒvƒX
-Texture2D<float> lightDepthTex : register(t7);//ƒ‰ƒCƒgƒfƒvƒX
+//æ·±åº¦å€¤æ¤œè¨¼ç”¨
+Texture2D<float> depthTex : register(t6);//ãƒ‡ãƒ—ã‚¹
+Texture2D<float> lightDepthTex : register(t7);//ãƒ©ã‚¤ãƒˆãƒ‡ãƒ—ã‚¹
 
 
 SamplerState smp : register(s0);
 cbuffer Weights : register(b0) {
-	//CPU‚©‚çfloat[8]‚Å“n‚³‚ê‚½‚à‚Ì‚ğ
-	//³‚µ‚­ó‚¯æ‚ë‚¤‚Æ‚·‚é‚Æfloat4[2]‚É
-	//‚¹‚´‚é‚ğ“¾‚È‚¢‚½‚ß«‚Ì‚æ‚¤‚È‘‚«•û‚É‚È‚é
+	//CPUã‹ã‚‰float[8]ã§æ¸¡ã•ã‚ŒãŸã‚‚ã®ã‚’
+	//æ­£ã—ãå—ã‘å–ã‚ã†ã¨ã™ã‚‹ã¨float4[2]ã«
+	//ã›ã–ã‚‹ã‚’å¾—ãªã„ãŸã‚â†“ã®ã‚ˆã†ãªæ›¸ãæ–¹ã«ãªã‚‹
 	float4 wgts[2];
 };
 
@@ -72,19 +72,19 @@ float4 Get5x5GaussianBlur(Texture2D<float4> tex, SamplerState smp,float2 uv,floa
 }
 
 float4 PeraPS(PeraType input) : SV_TARGET{
-	if (input.uv.x<0.2&&input.uv.y < 0.2) {//[“xo—Í
+	if (input.uv.x<0.2&&input.uv.y < 0.2) {//æ·±åº¦å‡ºåŠ›
 		float depth = depthTex.Sample(smp, input.uv*5);
 		depth = 1.0f - pow(depth, 30);
 		return float4(depth, depth, depth, 1);
-	}else if (input.uv.x < 0.2&&input.uv.y < 0.4) {//ƒ‰ƒCƒg‚©‚ç‚Ì[“xo—Í
+	}else if (input.uv.x < 0.2&&input.uv.y < 0.4) {//ãƒ©ã‚¤ãƒˆã‹ã‚‰ã®æ·±åº¦å‡ºåŠ›
 		float depth = lightDepthTex.Sample(smp, (input.uv-float2(0,0.2)) * 5);
 		depth = 1 - depth;
 		return float4(depth, depth, depth, 1);
-	}else if (input.uv.x < 0.2&&input.uv.y < 0.6) {//–@üo—Í
+	}else if (input.uv.x < 0.2&&input.uv.y < 0.6) {//æ³•ç·šå‡ºåŠ›
 		return texNormal.Sample(smp, (input.uv - float2(0, 0.4)) * 5);
-	}else if (input.uv.x < 0.2&&input.uv.y < 0.8) {//‚‹P“xk¬
+	}else if (input.uv.x < 0.2&&input.uv.y < 0.8) {//é«˜è¼åº¦ç¸®å°
 		return texShrinkHighLum.Sample(smp, (input.uv - float2(0, 0.6)) * 5);
-	}else if (input.uv.x < 0.2) {//’Êík¬
+	}else if (input.uv.x < 0.2) {//é€šå¸¸ç¸®å°
 		return texShrink.Sample(smp, (input.uv - float2(0, 0.8)) * 5);
 	}
 
@@ -105,7 +105,7 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 		uvSize *= 0.5f;
 	}
 
-	//‰æ–Ê^‚ñ’†‚©‚ç‚Ì[“x‚Ì·‚ğ‘ª‚é
+	//ç”»é¢çœŸã‚“ä¸­ã‹ã‚‰ã®æ·±åº¦ã®å·®ã‚’æ¸¬ã‚‹
 	float depthDiff=abs(depthTex.Sample(smp, float2(0.5,0.5)) - depthTex.Sample(smp, input.uv));
 	depthDiff = pow(depthDiff,0.5f);
 	uvSize = float2(1, 0.5);
@@ -114,7 +114,7 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 	float no;
 	t = modf(t, no);
 	float4 retColor[2];
-	retColor[0]= tex.Sample(smp, input.uv);//’ÊíƒeƒNƒXƒ`ƒƒ
+	retColor[0]= tex.Sample(smp, input.uv);//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	if (no == 0.0f) {
 		retColor[1]= Get5x5GaussianBlur(texShrink, smp, input.uv*uvSize + uvOfst, dx, dy, float4(uvOfst, uvOfst + uvSize));
 	}else{
@@ -129,10 +129,10 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 		}
 	}
 	return lerp(retColor[0],retColor[1],t);
-		//+//’ÊíƒeƒNƒXƒ`ƒƒ
-		//Get5x5GaussianBlur(texHighLum, smp, input.uv, dx, dy,float4(0,0,1,1)) + //1–‡–Ú‚‹P“x‚ğ‚Ú‚©‚µ
-		//saturate(bloomAccum);//k¬‚Ú‚©‚µÏ‚İ
-	//«ƒfƒBƒtƒ@[ƒhƒVƒF[ƒfƒBƒ“ƒOÀŒ±—pƒR[ƒh«
+		//+//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£
+		//Get5x5GaussianBlur(texHighLum, smp, input.uv, dx, dy,float4(0,0,1,1)) + //1æšç›®é«˜è¼åº¦ã‚’ã¼ã‹ã—
+		//saturate(bloomAccum);//ç¸®å°ã¼ã‹ã—æ¸ˆã¿
+	//â†“ãƒ‡ã‚£ãƒ•ã‚¡ãƒ¼ãƒ‰ã‚·ã‚§ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°å®Ÿé¨“ç”¨ã‚³ãƒ¼ãƒ‰â†“
 	//float4 normal=texNormal.Sample(smp, input.uv);
 	//normal = normal * 2.0f - 1.0f;
 	//float3 light = normalize(float3(1.0f, -1.0f, 1.0f));
@@ -179,7 +179,7 @@ float4 VerticalBlurPS(PeraType input) : SV_TARGET{
 	return float4(ret,col.a);
 }
 
-//ƒƒCƒ“ƒeƒNƒXƒ`ƒƒ‚ğ5x5ƒuƒ‰[‚Å‚Ú‚©‚·ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+//ãƒ¡ã‚¤ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’5x5ãƒ–ãƒ©ãƒ¼ã§ã¼ã‹ã™ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
 BlurOutput BlurPS(PeraType input)
 {
 	float w,h,miplevels;

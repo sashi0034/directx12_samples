@@ -8,25 +8,25 @@
 #include"imgui/imgui.h"
 #include"imgui/imgui_impl_win32.h"
 #include"imgui/imgui_impl_dx12.h"
-#include<SpriteFont.h>//•¶š—ñ‚ğ•\¦‚·‚é‚Ì‚É•K—v‚È‚à‚Ì
-#include<ResourceUploadBatch.h>//DXTKŒn—ñ‚ÌƒŠƒ\[ƒX‚ğg—p‚·‚é‚Ì‚É•K—v‚È‚à‚Ì
+#include<SpriteFont.h>//æ–‡å­—åˆ—ã‚’è¡¨ç¤ºã™ã‚‹ã®ã«å¿…è¦ãªã‚‚ã®
+#include<ResourceUploadBatch.h>//DXTKç³»åˆ—ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹ã®ã«å¿…è¦ãªã‚‚ã®
 
-//----ƒGƒtƒFƒNƒg‚É•K—v‚È‚à‚Ì‚ÌŠî–{--------------
-//ƒGƒtƒFƒNƒgƒŒƒ“ƒ_ƒ‰
+//----ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã«å¿…è¦ãªã‚‚ã®ã®åŸºæœ¬--------------
+//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ¬ãƒ³ãƒ€ãƒ©
 EffekseerRenderer::RendererRef _efkRenderer=nullptr;
-//ƒGƒtƒFƒNƒgƒ}ƒlƒWƒƒ
+//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒãƒã‚¸ãƒ£
 Effekseer::ManagerRef _efkManager=nullptr;
 
-//----DX12‚âVulkan,metal‚È‚Ç‚ÌƒRƒ}ƒ“ƒhƒŠƒXƒgŒn‚Ö‚Ì‘Î‰‚Ì‚½‚ß‚Ì‚à‚Ì----
-//ƒƒ‚ƒŠƒv[ƒ‹(Ú‚µ‚­‚Í•ª‚©‚Á‚Ä‚È‚¢)
+//----DX12ã‚„Vulkan,metalãªã©ã®ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆç³»ã¸ã®å¯¾å¿œã®ãŸã‚ã®ã‚‚ã®----
+//ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«(è©³ã—ãã¯åˆ†ã‹ã£ã¦ãªã„)
 Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> _efkMemoryPool = nullptr;
-//ƒRƒ}ƒ“ƒhƒŠƒXƒg(DX12‚Æ‚©Vulkan‚Ö‚Ì‘Î‰‚Ì‚½‚ß)
+//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ(DX12ã¨ã‹Vulkanã¸ã®å¯¾å¿œã®ãŸã‚)
 Effekseer::RefPtr<EffekseerRenderer::CommandList> _efkCmdList = nullptr;
 
-//----ƒGƒtƒFƒNƒgÄ¶‚É•K—v‚È‚à‚Ì---------------
-//ƒGƒtƒFƒNƒg–{‘Ì(ƒGƒtƒFƒNƒgƒtƒ@ƒCƒ‹‚É‘Î‰)
+//----ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”Ÿã«å¿…è¦ãªã‚‚ã®---------------
+//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆæœ¬ä½“(ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾å¿œ)
 Effekseer::EffectRef _effect=nullptr;
-// ƒGƒtƒFƒNƒgƒnƒ“ƒhƒ‹(Ä¶’†‚ÌƒGƒtƒFƒNƒg‚É‘Î‰)
+// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒãƒ³ãƒ‰ãƒ«(å†ç”Ÿä¸­ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã«å¯¾å¿œ)
 Effekseer::Handle _efkHandle;
 
 using namespace std;
@@ -36,9 +36,9 @@ constexpr int window_height = 720;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> _heapImgui;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> _heapForSpriteFont;
 
-DirectX::GraphicsMemory* _gmemory = nullptr;//ƒOƒ‰ƒtƒBƒNƒXƒƒ‚ƒŠƒIƒuƒWƒFƒNƒg
-DirectX::SpriteFont* spriteFont = nullptr;//ƒtƒHƒ“ƒg•\¦—pƒIƒuƒWƒFƒNƒg
-DirectX::SpriteBatch* _spriteBatch = nullptr;//ƒXƒvƒ‰ƒCƒg•\¦—pƒIƒuƒWƒFƒNƒg
+DirectX::GraphicsMemory* _gmemory = nullptr;//ã‚°ãƒ©ãƒ•ã‚£ã‚¯ã‚¹ãƒ¡ãƒ¢ãƒªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+DirectX::SpriteFont* spriteFont = nullptr;//ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+DirectX::SpriteBatch* _spriteBatch = nullptr;//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆè¡¨ç¤ºç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -74,7 +74,7 @@ Application::Initialize() {
 	_wndClass.hInstance = GetModuleHandle(nullptr);
 	_wndClass.cbSize = sizeof(WNDCLASSEX);
 	_wndClass.lpfnWndProc = (WNDPROC)WindowProcedure;
-	_wndClass.lpszClassName = "DirectX12ƒTƒ“ƒvƒ‹";
+	_wndClass.lpszClassName = "DirectX12ã‚µãƒ³ãƒ—ãƒ«";
 	RegisterClassEx(&_wndClass);
 	
 	RECT wrc = {};
@@ -87,7 +87,7 @@ Application::Initialize() {
 
 	_hwnd = CreateWindow(
 		_wndClass.lpszClassName,
-		"DirectX12‚ÌÀŒ±‚Å[‚·",
+		"DirectX12ã®å®Ÿé¨“ã§ãƒ¼ã™",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -109,7 +109,7 @@ Application::Initialize() {
 		return false;
 	}
 
-	//ƒtƒHƒ“ƒg—pˆ—
+	//ãƒ•ã‚©ãƒ³ãƒˆç”¨å‡¦ç†
 	_gmemory = new DirectX::GraphicsMemory(_dx12->Device());
 	DirectX::ResourceUploadBatch resUploadBatch(_dx12->Device());
 	resUploadBatch.Begin();
@@ -142,35 +142,35 @@ Application::Initialize() {
 
 	DXGI_FORMAT bbFormats[] = { DXGI_FORMAT_R8G8B8A8_UNORM,DXGI_FORMAT_R8G8B8A8_UNORM };
 	_efkRenderer = EffekseerRendererDX12::Create(
-		_dx12->Device(),//ƒfƒoƒCƒX
-		_dx12->CmdQue(), //ƒRƒ}ƒ“ƒhƒLƒ…[
-		2, //ƒoƒbƒNƒoƒbƒtƒ@‚Ì”
-		bbFormats, //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒtƒH[ƒ}ƒbƒg
-		1, //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”
-		DXGI_FORMAT_UNKNOWN, //ƒfƒvƒXƒtƒH[ƒ}ƒbƒg
-		false, //”½‘ÎƒfƒvƒX‚ ‚è‚©H
-		2000);//Å‘åƒp[ƒeƒBƒNƒ‹‚Ì”
+		_dx12->Device(),//ãƒ‡ãƒã‚¤ã‚¹
+		_dx12->CmdQue(), //ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
+		2, //ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®æ•°
+		bbFormats, //ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+		1, //ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°
+		DXGI_FORMAT_UNKNOWN, //ãƒ‡ãƒ—ã‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+		false, //åå¯¾ãƒ‡ãƒ—ã‚¹ã‚ã‚Šã‹ï¼Ÿ
+		2000);//æœ€å¤§ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æ•°
 
 
-	_efkManager = Effekseer::Manager::Create(2000);//Å‘åƒCƒ“ƒXƒ^ƒ“ƒX”
+	_efkManager = Effekseer::Manager::Create(2000);//æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°
 
 
-	//uŒnv‚ğ¶èŒn‚É‚µ‚Ä‚¨‚­(‚Æ‚É‚©‚­ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚ÌŒn‚É‡‚í‚¹‚é)
+	//ã€Œç³»ã€ã‚’å·¦æ‰‹ç³»ã«ã—ã¦ãŠã(ã¨ã«ã‹ãã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã®ç³»ã«åˆã‚ã›ã‚‹)
 	_efkManager->SetCoordinateSystem(Effekseer::CoordinateSystem::LH);
 
-	// •`‰æ—pƒCƒ“ƒXƒ^ƒ“ƒX‚©‚ç•`‰æ‹@”\‚ğİ’è
+	// æç”»ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‹ã‚‰æç”»æ©Ÿèƒ½ã‚’è¨­å®š
 	_efkManager->SetSpriteRenderer(_efkRenderer->CreateSpriteRenderer());
 	_efkManager->SetRibbonRenderer(_efkRenderer->CreateRibbonRenderer());
 	_efkManager->SetRingRenderer(_efkRenderer->CreateRingRenderer());
 	_efkManager->SetTrackRenderer(_efkRenderer->CreateTrackRenderer());
 	_efkManager->SetModelRenderer(_efkRenderer->CreateModelRenderer());
 
-	// •`‰æ—pƒCƒ“ƒXƒ^ƒ“ƒX‚©‚çƒeƒNƒXƒ`ƒƒ‚Ì“Ç‹@”\‚ğİ’è
-	// “Æ©Šg’£‰Â”\AŒ»İ‚Íƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚ñ‚Å‚¢‚éB
+	// æç”»ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­è¾¼æ©Ÿèƒ½ã‚’è¨­å®š
+	// ç‹¬è‡ªæ‹¡å¼µå¯èƒ½ã€ç¾åœ¨ã¯ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚“ã§ã„ã‚‹ã€‚
 	_efkManager->SetTextureLoader(_efkRenderer->CreateTextureLoader());
 	_efkManager->SetModelLoader(_efkRenderer->CreateModelLoader());
 
-	//DX12“Á—L‚Ìˆ—
+	//DX12ç‰¹æœ‰ã®å‡¦ç†
 	_efkMemoryPool = EffekseerRenderer::CreateSingleFrameMemoryPool(_efkRenderer->GetGraphicsDevice());
 	_efkCmdList = EffekseerRenderer::CreateCommandList(_efkRenderer->GetGraphicsDevice(), _efkMemoryPool);
 	_efkRenderer->SetCommandList(_efkCmdList);
@@ -180,30 +180,30 @@ Application::Initialize() {
 	_pmdRenderer->Init();
 
 
-	// ƒGƒtƒFƒNƒg‚Ì“Ç
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®èª­è¾¼
 	_effect = Effekseer::Effect::Create(_efkManager, (const EFK_CHAR*)L"effect/10/SimpleLaser.efk",1.0f, (const EFK_CHAR*)L"effect/10");
 
-	// ƒGƒtƒFƒNƒg‚ÌÄ¶
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿ
 	_efkHandle = _efkManager->Play(_effect, 0, 0, 0);
-	_actor.reset(new PMDActor(_dx12, "Model/‰‰¹ƒ~ƒN.pmd"));
+	_actor.reset(new PMDActor(_dx12, "Model/åˆéŸ³ãƒŸã‚¯.pmd"));
 	_actor->Move(-10, 0, 10);
 	
 	_pmdRenderer->AddActor(_actor);
-	_pmdRenderer->AddActor("Model/‰‰¹ƒ~ƒNmetal.pmd");
+	_pmdRenderer->AddActor("Model/åˆéŸ³ãƒŸã‚¯metal.pmd");
 
-	auto rin = make_shared<PMDActor>(_dx12, "Model/‹¾‰¹ƒŠƒ“.pmd");
+	auto rin = make_shared<PMDActor>(_dx12, "Model/é¡éŸ³ãƒªãƒ³.pmd");
 	rin->Move(-5, 0, 5);
 	_pmdRenderer->AddActor(rin);
 
-	auto ruka = make_shared<PMDActor>(_dx12, "Model/„‰¹ƒ‹ƒJ.pmd");
+	auto ruka = make_shared<PMDActor>(_dx12, "Model/å·¡éŸ³ãƒ«ã‚«.pmd");
 	ruka->Move(10, 0, 10);
 	_pmdRenderer->AddActor(ruka);
 
-	auto haku = make_shared<PMDActor>(_dx12, "Model/ã‰¹ƒnƒN.pmd");
+	auto haku = make_shared<PMDActor>(_dx12, "Model/å¼±éŸ³ãƒã‚¯.pmd");
 	haku->Move(-10, 0, 0);
 	_pmdRenderer->AddActor(haku);
 	
-	auto kaito = make_shared<PMDActor>(_dx12, "Model/ƒJƒCƒg.pmd");
+	auto kaito = make_shared<PMDActor>(_dx12, "Model/ã‚«ã‚¤ãƒˆ.pmd");
 	kaito->Move(10, 0, 0);
 	_pmdRenderer->AddActor(kaito);
 
@@ -226,13 +226,13 @@ void Application::SyncronizeEffekseerCamera()
 	_efkRenderer->SetCameraMatrix(fkViewMat);
 	_efkRenderer->SetProjectionMatrix(fkProjMat);
 }
-///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®
+///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•
 void 
 Application::Run() {
 	ShowWindow(_hwnd, SW_SHOW);
 	MSG msg = {};
 	bool shotFlg = false;
-	float fov = 3.1415926535897f / 4.0f;//ƒÎ/4
+	float fov = 3.1415926535897f / 4.0f;//Ï€/4
 	float backcol[4] = { 0.5,0.5,0.5,1 };
 	float bloomCol[4] = { 1.0,1.0,1.0,1.0f };
 	ImGui::SetNextWindowSize(ImVec2(400, 500));
@@ -249,9 +249,9 @@ Application::Run() {
 	float aoRadius = 1.0f;
 	float rimStrength =1.0;
 	float focusX=0.5f, focusY=0.5f;
-	while (true) {//ƒƒCƒ“ƒ‹[ƒv
+	while (true) {//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);//–|–ó
+			TranslateMessage(&msg);//ç¿»è¨³
 			DispatchMessage(&msg);//
 		}
 		if (msg.message == WM_QUIT) {
@@ -307,7 +307,7 @@ Application::Run() {
 				if (_efkManager->Exists(_efkHandle)) {
 					_efkManager->StopEffect(_efkHandle);
 				}
-				// ƒGƒtƒFƒNƒg‚ÌÄ¶
+				// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿ
 				_efkHandle = _efkManager->Play(_effect, 0, 0, 0);
 			}
 			shotFlg = true;
@@ -325,11 +325,11 @@ Application::Run() {
 		_pmdRenderer->Update();
 
 		_pmdRenderer->BeforeDrawFromLight();
-		//‰e‚Ö‚Ì•`‰æ
+		//å½±ã¸ã®æç”»
 		_dx12->PreDrawShadow();
 		_pmdRenderer->DrawFromLight();
 
-		//‚P–‡–Ú(ƒyƒ‰ƒ|ƒŠ‚Ö)
+		//ï¼‘æšç›®(ãƒšãƒ©ãƒãƒªã¸)
 		_dx12->PreDrawToPera1(backcol);
 		_dx12->DrawPrimitiveShapes();
 		_pmdRenderer->BeforeDraw();
@@ -340,26 +340,26 @@ Application::Run() {
 		efkpos.X += 0.1f;
 		_efkManager->SetLocation(_efkHandle, efkpos);
 
-		//ƒGƒtƒFƒNƒg•`‰æ
-		_efkManager->Update();//ƒ}ƒl[ƒWƒƒ‚ÌXV(ŠÔXV)
-		_efkMemoryPool->NewFrame();//“KØ‚ÈƒoƒbƒNƒoƒbƒtƒ@‚ğ‘I‘ğ
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆæç”»
+		_efkManager->Update();//ãƒãƒãƒ¼ã‚¸ãƒ£ã®æ›´æ–°(æ™‚é–“æ›´æ–°)
+		_efkMemoryPool->NewFrame();//é©åˆ‡ãªãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’é¸æŠ
 		EffekseerRendererDX12::BeginCommandList(_efkCmdList, _dx12->CmdList());//
-		_efkRenderer->BeginRendering();//•`‰æ‘Oˆ—
-		_efkManager->Draw();//ƒGƒtƒFƒNƒg•`‰æ
-		_efkRenderer->EndRendering();//•`‰æŒãˆ—
+		_efkRenderer->BeginRendering();//æç”»å‰å‡¦ç†
+		_efkManager->Draw();//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆæç”»
+		_efkRenderer->EndRendering();//æç”»å¾Œå‡¦ç†
 		EffekseerRendererDX12::EndCommandList(_efkCmdList);
 
-		//k¬ƒoƒbƒtƒ@‚Ö•`‰æ
+		//ç¸®å°ãƒãƒƒãƒ•ã‚¡ã¸æç”»
 		_dx12->DrawToShrinkBuffer();
 
-		//2–‡–Ú
+		//2æšç›®
 		_dx12->DrawAmbientOcclusion();
 
-		//3–‡–Ú
+		//3æšç›®
 		_dx12->Clear();
 		_dx12->Draw(_pmdRenderer);
 
-		//IMGUI—pˆ—
+		//IMGUIç”¨å‡¦ç†
 		ImGui_ImplDX12_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
@@ -409,8 +409,8 @@ Application::Run() {
 
 		_dx12->CmdList()->SetDescriptorHeaps(1, _heapForSpriteFont.GetAddressOf());
 		_spriteBatch->Begin(_dx12->CmdList());
-		spriteFont->DrawString(_spriteBatch, L"DirectX12‚Ì–‚“±‘", DirectX::XMFLOAT2(102, 102), DirectX::Colors::Black);
-		spriteFont->DrawString(_spriteBatch, L"DirectX12‚Ì–‚“±‘", DirectX::XMFLOAT2(100, 100), DirectX::Colors::Yellow);
+		spriteFont->DrawString(_spriteBatch, L"DirectX12ã®é­”å°æ›¸", DirectX::XMFLOAT2(102, 102), DirectX::Colors::Black);
+		spriteFont->DrawString(_spriteBatch, L"DirectX12ã®é­”å°æ›¸", DirectX::XMFLOAT2(100, 100), DirectX::Colors::Yellow);
 		_spriteBatch->End();
 
 		_dx12->CmdList()->SetDescriptorHeaps(1, _heapImgui.GetAddressOf());
@@ -419,7 +419,7 @@ Application::Run() {
 		_dx12->Flip();
 	}
 }
-///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“I—¹
+///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†
 void 
 Application::Terminate() {
 	CoUninitialize();

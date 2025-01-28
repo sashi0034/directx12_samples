@@ -1,29 +1,29 @@
 #include"Type.hlsli"
 
 
-//ƒV[ƒ“ŠÇ——pƒXƒƒbƒg
+//ã‚·ãƒ¼ãƒ³ç®¡ç†ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer SceneBuffer : register(b1) {
-	matrix view;//ƒrƒ…[
-	matrix proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	float3 eye;//‹“_
+	matrix view;//ãƒ“ãƒ¥ãƒ¼
+	matrix proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	float3 eye;//è¦–ç‚¹
 };
 
-//ƒAƒNƒ^[À•W•ÏŠ·—pƒXƒƒbƒg
+//ã‚¢ã‚¯ã‚¿ãƒ¼åº§æ¨™å¤‰æ›ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer TransBuffer : register(b2) {
 	matrix world;
 }
 
-//ƒ{[ƒ“s—ñ”z—ñ
+//ãƒœãƒ¼ãƒ³è¡Œåˆ—é…åˆ—
 cbuffer BonesBuffer : register(b3) {
 	matrix bones[512];
 }
 
 
 
-//’¸“_ƒVƒF[ƒ_(’¸“_î•ñ‚©‚ç•K—v‚È‚à‚Ì‚ğŸ‚Ìl‚Ö“n‚·)
-//ƒpƒCƒvƒ‰ƒCƒ“‚É“Š‚°‚é‚½‚ß‚É‚ÍSV_POSITION‚ª•K—v
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(é ‚ç‚¹æƒ…å ±ã‹ã‚‰å¿…è¦ãªã‚‚ã®ã‚’æ¬¡ã®äººã¸æ¸¡ã™)
+//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«æŠ•ã’ã‚‹ãŸã‚ã«ã¯SV_POSITIONãŒå¿…è¦
 BasicType BasicVS(float4 pos:POSITION,float4 normal:NORMAL,float2 uv:TEXCOORD,min16uint2 boneno:BONENO,min16uint weight:WEIGHT) {
-	//1280,720‚ğ’¼‚Åg‚Á‚Ä\‚í‚È‚¢B
+	//1280,720ã‚’ç›´ã§ä½¿ã£ã¦æ§‹ã‚ãªã„ã€‚
 	BasicType output;
 	float fWeight = float(weight) / 100.0f;
 	matrix conBone = bones[boneno.x]*fWeight + 

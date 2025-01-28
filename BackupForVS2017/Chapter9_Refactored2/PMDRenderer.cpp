@@ -48,7 +48,7 @@ PMDRenderer::CreateDefaultTexture(size_t width, size_t height) {
 	ID3D12Resource* buff = nullptr;
 	auto result = _dx12.Device()->CreateCommittedResource(
 		&texHeapProp,
-		D3D12_HEAP_FLAG_NONE,//“Á‚Éw’è‚È‚µ
+		D3D12_HEAP_FLAG_NONE,//ç‰¹ã«æŒ‡å®šãªã—
 		&resDesc,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		nullptr,
@@ -87,12 +87,12 @@ PMDRenderer::CreateBlackTexture() {
 ID3D12Resource*	
 PMDRenderer::CreateGrayGradationTexture() {
 	ID3D12Resource* gradBuff = CreateDefaultTexture(4, 256);
-	//ã‚ª”’‚­‚Ä‰º‚ª•‚¢ƒeƒNƒXƒ`ƒƒƒf[ƒ^‚ğì¬
+	//ä¸ŠãŒç™½ãã¦ä¸‹ãŒé»’ã„ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
 	std::vector<unsigned int> data(4 * 256);
 	auto it = data.begin();
 	unsigned int c = 0xff;
 	for (; it != data.end(); it += 4) {
-		auto col = (0xff << 24) | RGB(c, c, c);//RGBA‚ª‹t•À‚Ñ‚µ‚Ä‚¢‚é‚½‚ßRGBƒ}ƒNƒ‚Æ0xff<<24‚ğ—p‚¢‚Ä•\‚·B
+		auto col = (0xff << 24) | RGB(c, c, c);//RGBAãŒé€†ä¸¦ã³ã—ã¦ã„ã‚‹ãŸã‚RGBãƒã‚¯ãƒ­ã¨0xff<<24ã‚’ç”¨ã„ã¦è¡¨ã™ã€‚
 		std::fill(it, it + 4, col);
 		--c;
 	}
@@ -106,7 +106,7 @@ bool
 PMDRenderer::CheckShaderCompileResult(HRESULT result, ID3DBlob* error) {
 	if (FAILED(result)) {
 		if (result == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)) {
-			::OutputDebugStringA("ƒtƒ@ƒCƒ‹‚ªŒ©“–‚½‚è‚Ü‚¹‚ñ");
+			::OutputDebugStringA("ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹å½“ãŸã‚Šã¾ã›ã‚“");
 		}
 		else {
 			std::string errstr;
@@ -122,7 +122,7 @@ PMDRenderer::CheckShaderCompileResult(HRESULT result, ID3DBlob* error) {
 	}
 }
 
-//ƒpƒCƒvƒ‰ƒCƒ“‰Šú‰»
+//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³åˆæœŸåŒ–
 HRESULT 
 PMDRenderer::CreateGraphicsPipelineForPMD() {
 	ComPtr<ID3DBlob> vsBlob = nullptr;
@@ -160,31 +160,31 @@ PMDRenderer::CreateGraphicsPipelineForPMD() {
 	gpipeline.VS = CD3DX12_SHADER_BYTECODE(vsBlob.Get());
 	gpipeline.PS = CD3DX12_SHADER_BYTECODE(psBlob.Get());
 
-	gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;//’†g‚Í0xffffffff
+	gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;//ä¸­èº«ã¯0xffffffff
 
 
 	gpipeline.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 
 	gpipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
-	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;//ƒJƒŠƒ“ƒO‚µ‚È‚¢
+	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;//ã‚«ãƒªãƒ³ã‚°ã—ãªã„
 
-	gpipeline.DepthStencilState.DepthEnable = true;//[“xƒoƒbƒtƒ@‚ğg‚¤‚¼
-	gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;//‘S‚Ä‘‚«‚İ
-	gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//¬‚³‚¢•û‚ğÌ—p
+	gpipeline.DepthStencilState.DepthEnable = true;//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ã†ã
+	gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;//å…¨ã¦æ›¸ãè¾¼ã¿
+	gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;//å°ã•ã„æ–¹ã‚’æ¡ç”¨
 	gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 	gpipeline.DepthStencilState.StencilEnable = false;
 
-	gpipeline.InputLayout.pInputElementDescs = inputLayout;//ƒŒƒCƒAƒEƒgæ“ªƒAƒhƒŒƒX
-	gpipeline.InputLayout.NumElements = _countof(inputLayout);//ƒŒƒCƒAƒEƒg”z—ñ”
+	gpipeline.InputLayout.pInputElementDescs = inputLayout;//ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆå…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+	gpipeline.InputLayout.NumElements = _countof(inputLayout);//ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆé…åˆ—æ•°
 
-	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;//ƒXƒgƒŠƒbƒv‚ÌƒJƒbƒg‚È‚µ
-	gpipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;//OŠpŒ`‚Å\¬
+	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;//ã‚¹ãƒˆãƒªãƒƒãƒ—æ™‚ã®ã‚«ãƒƒãƒˆãªã—
+	gpipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;//ä¸‰è§’å½¢ã§æ§‹æˆ
 
-	gpipeline.NumRenderTargets = 1;//¡‚Í‚P‚Â‚Ì‚İ
-	gpipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;//0`1‚É³‹K‰»‚³‚ê‚½RGBA
+	gpipeline.NumRenderTargets = 1;//ä»Šã¯ï¼‘ã¤ã®ã¿
+	gpipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;//0ã€œ1ã«æ­£è¦åŒ–ã•ã‚ŒãŸRGBA
 
-	gpipeline.SampleDesc.Count = 1;//ƒTƒ“ƒvƒŠƒ“ƒO‚Í1ƒsƒNƒZƒ‹‚É‚Â‚«‚P
-	gpipeline.SampleDesc.Quality = 0;//ƒNƒIƒŠƒeƒB‚ÍÅ’á
+	gpipeline.SampleDesc.Count = 1;//ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã¯1ãƒ”ã‚¯ã‚»ãƒ«ã«ã¤ãï¼‘
+	gpipeline.SampleDesc.Quality = 0;//ã‚¯ã‚ªãƒªãƒ†ã‚£ã¯æœ€ä½
 	result = _dx12.Device()->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(_pipeline.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) {
 		assert(SUCCEEDED(result));
@@ -192,21 +192,21 @@ PMDRenderer::CreateGraphicsPipelineForPMD() {
 	return result;
 
 }
-//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‰Šú‰»
+//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£åˆæœŸåŒ–
 HRESULT 
 PMDRenderer::CreateRootSignature() {
-	//ƒŒƒ“ƒW
-	CD3DX12_DESCRIPTOR_RANGE  descTblRanges[4] = {};//ƒeƒNƒXƒ`ƒƒ‚Æ’è”‚Ì‚Q‚Â
-	descTblRanges[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);//’è”[b0](ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“—p)
-	descTblRanges[1].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 1);//’è”[b1](ƒ[ƒ‹ƒhAƒ{[ƒ“—p)
-	descTblRanges[2].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 2);//’è”[b2](ƒ}ƒeƒŠƒAƒ‹—p)
-	descTblRanges[3].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 4, 0);//ƒeƒNƒXƒ`ƒƒ‚S‚Â(Šî–{‚Æsph‚Æspa‚ÆƒgƒD[ƒ“)
+	//ãƒ¬ãƒ³ã‚¸
+	CD3DX12_DESCRIPTOR_RANGE  descTblRanges[4] = {};//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨å®šæ•°ã®ï¼’ã¤
+	descTblRanges[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);//å®šæ•°[b0](ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ç”¨)
+	descTblRanges[1].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 1);//å®šæ•°[b1](ãƒ¯ãƒ¼ãƒ«ãƒ‰ã€ãƒœãƒ¼ãƒ³ç”¨)
+	descTblRanges[2].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 2);//å®šæ•°[b2](ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨)
+	descTblRanges[3].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 4, 0);//ãƒ†ã‚¯ã‚¹ãƒãƒ£ï¼”ã¤(åŸºæœ¬ã¨sphã¨spaã¨ãƒˆã‚¥ãƒ¼ãƒ³)
 
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	CD3DX12_ROOT_PARAMETER rootParams[3] = {};
-	rootParams[0].InitAsDescriptorTable(1, &descTblRanges[0]);//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“•ÏŠ·
-	rootParams[1].InitAsDescriptorTable(1, &descTblRanges[1]);//ƒ[ƒ‹ƒhEƒ{[ƒ“•ÏŠ·
-	rootParams[2].InitAsDescriptorTable(2, &descTblRanges[2]);//ƒ}ƒeƒŠƒAƒ‹ü‚è
+	rootParams[0].InitAsDescriptorTable(1, &descTblRanges[0]);//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³å¤‰æ›
+	rootParams[1].InitAsDescriptorTable(1, &descTblRanges[1]);//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ»ãƒœãƒ¼ãƒ³å¤‰æ›
+	rootParams[2].InitAsDescriptorTable(2, &descTblRanges[2]);//ãƒãƒ†ãƒªã‚¢ãƒ«å‘¨ã‚Š
 
 	CD3DX12_STATIC_SAMPLER_DESC samplerDescs[2] = {};
 	samplerDescs[0].Init(0);

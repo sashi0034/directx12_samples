@@ -1,38 +1,38 @@
 #include"BasicType.hlsli"
 
-Texture2D<float4> tex:register(t0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒx[ƒX)
-Texture2D<float4> sph:register(t1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(æZ)
-Texture2D<float4> spa:register(t2);//2”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(‰ÁZ)
-Texture2D<float4> toon:register(t3);//3”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ(ƒgƒD[ƒ“)
+Texture2D<float4> tex:register(t0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒ™ãƒ¼ã‚¹)
+Texture2D<float4> sph:register(t1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ä¹—ç®—)
+Texture2D<float4> spa:register(t2);//2ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(åŠ ç®—)
+Texture2D<float4> toon:register(t3);//3ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£(ãƒˆã‚¥ãƒ¼ãƒ³)
 
-SamplerState smp:register(s0);//0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
-SamplerState smpToon:register(s1);//1”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰
+SamplerState smp:register(s0);//0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
+SamplerState smpToon:register(s1);//1ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©
 
-//’è”ƒoƒbƒtƒ@0
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡0
 cbuffer SceneData : register(b0) {
-	matrix world;//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	matrix world;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	matrix view;
-	matrix proj;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	matrix proj;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	float3 eye;
 };
-//’è”ƒoƒbƒtƒ@1
-//ƒ}ƒeƒŠƒAƒ‹—p
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡1
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
 cbuffer Material : register(b1) {
-	float4 diffuse;//ƒfƒBƒtƒ…[ƒYF
-	float4 specular;//ƒXƒyƒLƒ…ƒ‰
-	float3 ambient;//ƒAƒ“ƒrƒGƒ“ƒg
+	float4 diffuse;//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	float4 specular;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©
+	float3 ambient;//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
 };
 
 BasicType BasicVS(float4 pos : POSITION , float4 normal : NORMAL, float2 uv : TEXCOORD) {
-	BasicType output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
+	BasicType output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
 	pos = mul(world, pos);
-	output.svpos = mul(mul(proj,view),pos);//ƒVƒF[ƒ_‚Å‚Í—ñ—Dæ‚È‚Ì‚Å’ˆÓ
+	output.svpos = mul(mul(proj,view),pos);//ã‚·ã‚§ãƒ¼ãƒ€ã§ã¯åˆ—å„ªå…ˆãªã®ã§æ³¨æ„
 	output.pos = mul(view, pos);
-	normal.w = 0;//‚±‚±d—v(•½sˆÚ“®¬•ª‚ğ–³Œø‚É‚·‚é)
-	output.normal = mul(world,normal);//–@ü‚É‚àƒ[ƒ‹ƒh•ÏŠ·‚ğs‚¤
+	normal.w = 0;//ã“ã“é‡è¦(å¹³è¡Œç§»å‹•æˆåˆ†ã‚’ç„¡åŠ¹ã«ã™ã‚‹)
+	output.normal = mul(world,normal);//æ³•ç·šã«ã‚‚ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã‚’è¡Œã†
 	output.vnormal = mul(view, output.normal);
 	output.uv = uv;
-	output.ray = normalize(pos.xyz - mul(view,eye));//‹üƒxƒNƒgƒ‹
+	output.ray = normalize(pos.xyz - mul(view,eye));//è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	return output;
 }

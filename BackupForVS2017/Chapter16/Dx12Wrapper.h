@@ -13,97 +13,97 @@
 class PMDActor;
 class PMDRenderer;
 using Microsoft::WRL::ComPtr;
-///DirectX12‚ÌŠe—v‘f‚Æ‚©ŠÖ”‚ğ
-///ƒ‰ƒbƒv‚µ‚Ä‚é‚¾‚¯‚ÌƒNƒ‰ƒX
+///DirectX12ã®å„è¦ç´ ã¨ã‹é–¢æ•°ã‚’
+///ãƒ©ãƒƒãƒ—ã—ã¦ã‚‹ã ã‘ã®ã‚¯ãƒ©ã‚¹
 class Dx12Wrapper
 {
 private:
 	struct MultiTexture{
-		ComPtr<ID3D12Resource> texBuff;//’ÊíƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
-		ComPtr<ID3D12Resource> sphBuff;//SPHƒeƒNƒXƒ`ƒƒ
-		ComPtr<ID3D12Resource> spaBuff;//SPAƒeƒNƒXƒ`ƒƒ
-		ComPtr<ID3D12Resource> toonBuff;//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒ
+		ComPtr<ID3D12Resource> texBuff;//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
+		ComPtr<ID3D12Resource> sphBuff;//SPHãƒ†ã‚¯ã‚¹ãƒãƒ£
+		ComPtr<ID3D12Resource> spaBuff;//SPAãƒ†ã‚¯ã‚¹ãƒãƒ£
+		ComPtr<ID3D12Resource> toonBuff;//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	};
 
 	HWND _hwnd;
 
-	//Šî–{“I‚È“z(DXGI)
+	//åŸºæœ¬çš„ãªå¥´(DXGI)
 	ComPtr < IDXGIFactory4> _dxgiFactory;
 	ComPtr < IDXGISwapChain4> _swapchain;
 
-	//Šî–{“I‚È“z(ƒfƒoƒCƒX)
+	//åŸºæœ¬çš„ãªå¥´(ãƒ‡ãƒã‚¤ã‚¹)
 	ComPtr < ID3D12Device> _dev;
 
 
-	//ƒRƒ}ƒ“ƒhƒLƒ…[(ƒRƒ}ƒ“ƒhÀs‚Ì’PˆÊ)
+	//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼(ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œã®å˜ä½)
 	ComPtr < ID3D12CommandQueue> _cmdQue;
 
-	//[“xƒoƒbƒtƒ@—pƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> _depthBuffer;
-	//[“xƒoƒbƒtƒ@ƒrƒ…[—pƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ç”¨ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> _dsvHeap;
-	//ƒVƒƒƒhƒEƒ}ƒbƒv—p[“xƒoƒbƒtƒ@
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ç”¨æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> _lightDepthBuffer;
 	
 
 	bool CreateDepthBuffer();
 	bool CreateDSV();
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> _rtvDescHeap;
-	//ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ª‚Á‚Ä‚¢‚éƒŠƒ\[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ãŒæŒã£ã¦ã„ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	std::vector<ID3D12Resource*> _backBuffers;
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğŠi”[‚·‚é‚½‚ß‚Ìƒƒ‚ƒŠ—Ìˆæ
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’æ ¼ç´ã™ã‚‹ãŸã‚ã®ãƒ¡ãƒ¢ãƒªé ˜åŸŸ
 	ComPtr <ID3D12CommandAllocator> _cmdAlloc = nullptr;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg–{‘Ì(ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^‚É–½—ß‚ğ“o˜^‚·‚é‚½‚ß‚Ì
-	//ƒCƒ“ƒ^[ƒtƒFƒCƒX)
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆæœ¬ä½“(ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã«å‘½ä»¤ã‚’ç™»éŒ²ã™ã‚‹ãŸã‚ã®
+	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹)
 	ComPtr<ID3D12GraphicsCommandList> _cmdList = nullptr;
 	
-	//‘Ò‚¿‚Ì‚½‚ß‚ÌƒtƒFƒ“ƒX
+	//å¾…ã¡ã®ãŸã‚ã®ãƒ•ã‚§ãƒ³ã‚¹
 	ComPtr<ID3D12Fence> _fence;
 	UINT64 _fenceValue;
 
-	//–³‘Ê“Ç‚İ‚µ‚È‚¢‚æ‚¤‚ÉƒeƒNƒXƒ`ƒƒ‚Ìƒe[ƒuƒ‹‚ğì‚Á‚Ä‚¨‚­
+	//ç„¡é§„èª­ã¿ã—ãªã„ã‚ˆã†ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œã£ã¦ãŠã
 	std::unordered_map<std::wstring, ComPtr<ID3D12Resource>> _textureTable;
 
 	bool CreateTextureFromImageData(const DirectX::Image* img, ComPtr<ID3D12Resource>& buff,bool isDiscrete=false);
 
-	ComPtr<ID3D12Resource> _whiteTex;//”’ƒeƒNƒXƒ`ƒƒ
-	///æZ—p‚Ì^‚Á”’ƒeƒNƒXƒ`ƒƒ(æZ‚³‚ê‚Ä‚à‰e‹¿‚ªo‚È‚¢)‚ğì‚è‚Ü‚·B
+	ComPtr<ID3D12Resource> _whiteTex;//ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	///ä¹—ç®—ç”¨ã®çœŸã£ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£(ä¹—ç®—ã•ã‚Œã¦ã‚‚å½±éŸ¿ãŒå‡ºãªã„)ã‚’ä½œã‚Šã¾ã™ã€‚
 	bool CreateWhiteTexture();
 
-	ComPtr<ID3D12Resource> _blackTex;//•ƒeƒNƒXƒ`ƒƒ
-	///‰ÁZ—p‚Ì^‚Á•ƒeƒNƒXƒ`ƒƒ(‰ÁZ‚³‚ê‚Ä‚à‰e‹¿‚ªo‚È‚¢)‚ğì‚è‚Ü‚·B
+	ComPtr<ID3D12Resource> _blackTex;//é»’ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	///åŠ ç®—ç”¨ã®çœŸã£é»’ãƒ†ã‚¯ã‚¹ãƒãƒ£(åŠ ç®—ã•ã‚Œã¦ã‚‚å½±éŸ¿ãŒå‡ºãªã„)ã‚’ä½œã‚Šã¾ã™ã€‚
 	bool CreateBlackTexture();
 
-	ComPtr<ID3D12Resource> _gradTex;//ƒOƒŒ[ƒOƒ‰ƒf[ƒVƒ‡ƒ“ƒeƒNƒXƒ`ƒƒ
-	//ƒgƒD[ƒ“‚ª‚È‚¢ê‡‚ÌŠK’²‚ğ’è‹`‚·‚é
+	ComPtr<ID3D12Resource> _gradTex;//ã‚°ãƒ¬ãƒ¼ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	//ãƒˆã‚¥ãƒ¼ãƒ³ãŒãªã„å ´åˆã®éšèª¿ã‚’å®šç¾©ã™ã‚‹
 	bool CreateGradationTexture();
 
-	ComPtr < ID3D12Resource> _sceneCB;//À•W•ÏŠ·’è”ƒoƒbƒtƒ@
-	ComPtr < ID3D12DescriptorHeap> _sceneHeap;//À•W•ÏŠ·CBVƒq[ƒv
-	///À•W•ÏŠ·—p’è”ƒoƒbƒtƒ@‚¨‚æ‚Ñ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğì¬‚·‚é
+	ComPtr < ID3D12Resource> _sceneCB;//åº§æ¨™å¤‰æ›å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	ComPtr < ID3D12DescriptorHeap> _sceneHeap;//åº§æ¨™å¤‰æ›CBVãƒ’ãƒ¼ãƒ—
+	///åº§æ¨™å¤‰æ›ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡ãŠã‚ˆã³å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆã™ã‚‹
 	bool CreateTransformConstantBuffer();
 	bool CreateTransformBufferView();
 
 	struct SceneMatrix {
-		DirectX::XMMATRIX view;//ƒrƒ…[
-		DirectX::XMMATRIX proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-		DirectX::XMMATRIX invproj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-		DirectX::XMMATRIX lightCamera;//ƒ‰ƒCƒg‚©‚çŒ©‚½ƒrƒ…[
-		DirectX::XMMATRIX shadow;//‰es—ñ
-		DirectX::XMFLOAT4 lightVec;//ƒ‰ƒCƒgƒxƒNƒgƒ‹
-		DirectX::XMFLOAT3 eye;//‹“_
-		bool isSelfShadow;//ƒVƒƒƒhƒEƒ}ƒbƒvƒtƒ‰ƒO
+		DirectX::XMMATRIX view;//ãƒ“ãƒ¥ãƒ¼
+		DirectX::XMMATRIX proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+		DirectX::XMMATRIX invproj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+		DirectX::XMMATRIX lightCamera;//ãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸãƒ“ãƒ¥ãƒ¼
+		DirectX::XMMATRIX shadow;//å½±è¡Œåˆ—
+		DirectX::XMFLOAT4 lightVec;//ãƒ©ã‚¤ãƒˆãƒ™ã‚¯ãƒˆãƒ«
+		DirectX::XMFLOAT3 eye;//è¦–ç‚¹
+		bool isSelfShadow;//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ãƒ•ãƒ©ã‚°
 	};
 
 
 	SceneMatrix* _mappedScene;
 	float _bgColor[4];
-	//‹“_(ƒJƒƒ‰‚ÌˆÊ’u)XMVECTOR
-	//’‹“_(Œ©‚é‘ÎÛ‚ÌˆÊ’u)XMVECTOR
-	//ãƒxƒNƒgƒ‹(ã)XMVECTOR
+	//è¦–ç‚¹(ã‚«ãƒ¡ãƒ©ã®ä½ç½®)XMVECTOR
+	//æ³¨è¦–ç‚¹(è¦‹ã‚‹å¯¾è±¡ã®ä½ç½®)XMVECTOR
+	//ä¸Šãƒ™ã‚¯ãƒˆãƒ«(ä¸Š)XMVECTOR
 	DirectX::XMFLOAT3 _eye;
 	DirectX::XMFLOAT3 _target;
 	DirectX::XMFLOAT3 _up;
@@ -118,33 +118,33 @@ private:
 
 	//std::vector<PMDActor*> _actors;
 
-	//1–‡–ÚƒŒƒ“ƒ_ƒŠƒ“ƒO—p
-	//‚¢‚í‚ä‚éƒyƒ‰ƒ|ƒŠ‚É’£‚è•t‚¯‚é‚½‚ß‚ÌŠG‚Ì
-	//ƒƒ‚ƒŠƒŠƒ\[ƒX‚Æ‚»‚Ìƒrƒ…[
+	//1æšç›®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨
+	//ã„ã‚ã‚†ã‚‹ãƒšãƒ©ãƒãƒªã«å¼µã‚Šä»˜ã‘ã‚‹ãŸã‚ã®çµµã®
+	//ãƒ¡ãƒ¢ãƒªãƒªã‚½ãƒ¼ã‚¹ã¨ãã®ãƒ“ãƒ¥ãƒ¼
 	ComPtr<ID3D12DescriptorHeap> _peraRTVHeap;
 	ComPtr<ID3D12DescriptorHeap> _peraSRVHeap;
 	std::array<ComPtr<ID3D12Resource>,2> _pera1Resources;
-	//‚P–‡–Úƒyƒ‰ƒ|ƒŠ‚Ì‚½‚ß‚ÌƒŠƒ\[ƒX‚Æƒrƒ…[‚ğ
-	//ì¬
+	//ï¼‘æšç›®ãƒšãƒ©ãƒãƒªã®ãŸã‚ã®ãƒªã‚½ãƒ¼ã‚¹ã¨ãƒ“ãƒ¥ãƒ¼ã‚’
+	//ä½œæˆ
 	bool CreatePera1ResourceAndView();
 	
-	//ƒyƒ‰ƒ|ƒŠ—p’¸“_ƒoƒbƒtƒ@(Nš‚Ì4“_)
+	//ãƒšãƒ©ãƒãƒªç”¨é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡(Nå­—ã®4ç‚¹)
 	ComPtr<ID3D12Resource> _peraVB;
 	D3D12_VERTEX_BUFFER_VIEW _peraVBV;
 
-	//ƒyƒ‰ƒ|ƒŠ—pƒpƒCƒvƒ‰ƒCƒ“•ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒšãƒ©ãƒãƒªç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ï¼†ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12PipelineState> _peraPipeline;
 	ComPtr<ID3D12RootSignature> _peraRS;
 
-	//ƒyƒ‰ƒ|ƒŠ‚É“Š‚°‚é’è”ƒoƒbƒtƒ@
+	//ãƒšãƒ©ãƒãƒªã«æŠ•ã’ã‚‹å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> _peraCB;
 	ComPtr<ID3D12DescriptorHeap> _peraCBVHeap;
 	bool CreateConstantBufferForPera();
 
 	struct PostSetting {
-		bool isDebugDisp;//ƒfƒoƒbƒO•\¦
-		bool isSSAO;//SSAOƒIƒ“
-		DirectX::XMFLOAT4 bloomColor;//ƒuƒ‹[ƒ€ƒJƒ‰[
+		bool isDebugDisp;//ãƒ‡ãƒãƒƒã‚°è¡¨ç¤º
+		bool isSSAO;//SSAOã‚ªãƒ³
+		DirectX::XMFLOAT4 bloomColor;//ãƒ–ãƒ«ãƒ¼ãƒ ã‚«ãƒ©ãƒ¼
 	};
 	ComPtr<ID3D12Resource> _postSettingResource;
 	PostSetting* _mappedPostSetting;
@@ -152,19 +152,19 @@ private:
 	bool CreatePostSetting();
 
 
-	//˜c‚İ—pƒm[ƒ}ƒ‹ƒ}ƒbƒv
+	//æ­ªã¿ç”¨ãƒãƒ¼ãƒãƒ«ãƒãƒƒãƒ—
 	ComPtr<ID3D12Resource> _distBuff;
 	ComPtr<ID3D12DescriptorHeap> _distSRVHeap;
-	//[“x’lƒeƒNƒXƒ`ƒƒ—p
+	//æ·±åº¦å€¤ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨
 	ComPtr<ID3D12DescriptorHeap> _depthSRVHeap;
 	bool CreateDistortion();
 	bool CreateDepthSRV();
 
-	//ƒvƒŠƒ~ƒeƒBƒu—p’¸“_ƒoƒbƒtƒ@
+	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ç”¨é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	std::vector<ComPtr<ID3D12Resource>> _primitivesVB;
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> _primitivesVBV;
 
-	//ƒvƒŠƒ~ƒeƒBƒu—pƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ç”¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	std::vector<ComPtr<ID3D12Resource>> _primitivesIB;
 	std::vector<D3D12_INDEX_BUFFER_VIEW> _primitivesIBV;
 	bool CreatePrimitives();
@@ -174,9 +174,9 @@ private:
 	bool CreatePrimitivePipeline();
 	bool CreatePrimitiveRootSignature();
 	
-	ComPtr<ID3D12PipelineState> _blurPipeline;//‰æ–Ê‘S‘Ì‚Ú‚©‚µ—pƒpƒCƒvƒ‰ƒCƒ“
-	std::array<ComPtr<ID3D12Resource>, 2> _bloomBuffers;//ƒuƒ‹[ƒ€—pƒoƒbƒtƒ@
-	ComPtr<ID3D12Resource> _dofBuffer;//”íÊŠE[“x—p‚Ú‚©‚µƒoƒbƒtƒ@
+	ComPtr<ID3D12PipelineState> _blurPipeline;//ç”»é¢å…¨ä½“ã¼ã‹ã—ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
+	std::array<ComPtr<ID3D12Resource>, 2> _bloomBuffers;//ãƒ–ãƒ«ãƒ¼ãƒ ç”¨ãƒãƒƒãƒ•ã‚¡
+	ComPtr<ID3D12Resource> _dofBuffer;//è¢«å†™ç•Œæ·±åº¦ç”¨ã¼ã‹ã—ãƒãƒƒãƒ•ã‚¡
 	bool CreateBloomBuffer();
 	bool CreateBlurForDOFBuffer();
 
@@ -219,28 +219,28 @@ public:
 	bool CreatePeraVertex();
 	bool CreatePeraPipeline();
 
-	//ƒ‰ƒCƒg‚©‚ç‚Ì•`‰æ(‰e—p)‚Ì€”õ
+	//ãƒ©ã‚¤ãƒˆã‹ã‚‰ã®æç”»(å½±ç”¨)ã®æº–å‚™
 	bool PreDrawShadow();
 
-	//ƒyƒ‰ƒ|ƒŠƒSƒ“‚Ö‚Ì•`‰æ€”õ
+	//ãƒšãƒ©ãƒãƒªã‚´ãƒ³ã¸ã®æç”»æº–å‚™
 	bool PreDrawToPera1();
 
-	//ƒyƒ‰ƒ|ƒŠƒSƒ“‚Ö‚Ì•`‰æ
-	///ƒvƒŠƒ~ƒeƒBƒuŒ`ó(•½–ÊA‰~’ŒA‰~A‹…)‚ğ•`‰æ
+	//ãƒšãƒ©ãƒãƒªã‚´ãƒ³ã¸ã®æç”»
+	///ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶(å¹³é¢ã€å††æŸ±ã€å††éŒã€çƒ)ã‚’æç”»
 	void DrawPrimitiveShapes();
 	void DrawToPera1(std::shared_ptr<PMDRenderer> renderer);
 	void DrawToPera2();
 	void DrawShrinkTextureForBlur();
 	void DrawAmbientOcculusion();
-	//‰æ–Ê‚ÌƒNƒŠƒA
+	//ç”»é¢ã®ã‚¯ãƒªã‚¢
 	bool Clear();
 
-	//•`‰æ
+	//æç”»
 	void Draw(std::shared_ptr<PMDRenderer> renderer);
 
 	void SetCameraSetting();
 
-	//ƒtƒŠƒbƒv
+	//ãƒ•ãƒªãƒƒãƒ—
 	void Flip();
 	void WaitForCommandQueue();
 
@@ -253,12 +253,12 @@ public:
 	DirectX::XMVECTOR GetCameraPosition();
 
 	ComPtr<ID3D12DescriptorHeap> GetHeapForImgui();
-	void SetDebugDisplay(bool flg);///ƒfƒoƒbƒO•\¦‚ÌON / OFF
-	void SetSSAO(bool flg);///ƒAƒ“ƒrƒGƒ“ƒgƒIƒNƒ‹[ƒWƒ‡ƒ“‚ÌON / OFF
-	void SetSelfShadow(bool flg);///ƒZƒ‹ƒtƒVƒƒƒhƒEON / OFF
-	void SetLightVector(float vec[3]);///ŒõüƒxƒNƒgƒ‹(xyzƒxƒNƒgƒ‹)
-	void SetBackColor(float col[4]);///”wŒiF‚Ì•ÏX
-	void SetBloomColor(float col[3]);///ƒuƒ‹[ƒ€‚ÌF•t‚¯
+	void SetDebugDisplay(bool flg);///ãƒ‡ãƒãƒƒã‚°è¡¨ç¤ºã®ON / OFF
+	void SetSSAO(bool flg);///ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆã‚ªã‚¯ãƒ«ãƒ¼ã‚¸ãƒ§ãƒ³ã®ON / OFF
+	void SetSelfShadow(bool flg);///ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ON / OFF
+	void SetLightVector(float vec[3]);///å…‰ç·šãƒ™ã‚¯ãƒˆãƒ«(xyzãƒ™ã‚¯ãƒˆãƒ«)
+	void SetBackColor(float col[4]);///èƒŒæ™¯è‰²ã®å¤‰æ›´
+	void SetBloomColor(float col[3]);///ãƒ–ãƒ«ãƒ¼ãƒ ã®è‰²ä»˜ã‘
 
 };
 

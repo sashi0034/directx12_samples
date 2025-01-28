@@ -17,25 +17,25 @@ class PMDRenderer;
 class Application
 {
 private:
-	HWND _hwnd;//‚Ü‚¸‚±‚ÌƒEƒBƒ“ƒhƒE‚ğ‘€ì‚·‚é‚½‚ß‚Ìƒnƒ“ƒhƒ‹‚ğì‚è‚½‚¢
+	HWND _hwnd;//ã¾ãšã“ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æ“ä½œã™ã‚‹ãŸã‚ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’ä½œã‚ŠãŸã„
 	WNDCLASSEX _wndClass = {};
 
 	std::shared_ptr<Dx12Wrapper> _dx12;
 	std::shared_ptr<PMDActor> _actor;
 	std::shared_ptr<PMDRenderer> _pmdRenderer;
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğprivate‚É‚µ‚Änew‚³‚¹‚È‚¢‚æ‚¤‚É
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’privateã«ã—ã¦newã•ã›ãªã„ã‚ˆã†ã«
 	Application();
-	//ƒRƒs[A‘ã“ü‹Ö~
+	//ã‚³ãƒ”ãƒ¼ã€ä»£å…¥ç¦æ­¢
 	Application(const Application&) = delete;
 	void operator=(const Application&) = delete;
 public:
 	static Application& Instance();
-	///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‰Šú‰»
+	///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åˆæœŸåŒ–
 	bool Initialize();
 	void SyncronizeEffekseerCamera();
-	///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®
+	///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•
 	void Run();
-	///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“I—¹
+	///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†
 	void Terminate();
 
 	Size GetWindowSize();

@@ -13,66 +13,66 @@ class Dx12Wrapper
 	template<typename T>
 	using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	//DXGI‚Ü‚í‚è
-	ComPtr < IDXGIFactory4> _dxgiFactory = nullptr;//DXGIƒCƒ“ƒ^[ƒtƒFƒCƒX
-	ComPtr < IDXGISwapChain4> _swapchain = nullptr;//ƒXƒƒbƒvƒ`ƒFƒCƒ“
+	//DXGIã¾ã‚ã‚Š
+	ComPtr < IDXGIFactory4> _dxgiFactory = nullptr;//DXGIã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
+	ComPtr < IDXGISwapChain4> _swapchain = nullptr;//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³
 
-	//DirectX12‚Ü‚í‚è
-	ComPtr< ID3D12Device> _dev = nullptr;//ƒfƒoƒCƒX
-	ComPtr < ID3D12CommandAllocator> _cmdAllocator = nullptr;//ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^
-	ComPtr < ID3D12GraphicsCommandList> _cmdList = nullptr;//ƒRƒ}ƒ“ƒhƒŠƒXƒg
-	ComPtr < ID3D12CommandQueue> _cmdQueue = nullptr;//ƒRƒ}ƒ“ƒhƒLƒ…[
+	//DirectX12ã¾ã‚ã‚Š
+	ComPtr< ID3D12Device> _dev = nullptr;//ãƒ‡ãƒã‚¤ã‚¹
+	ComPtr < ID3D12CommandAllocator> _cmdAllocator = nullptr;//ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿
+	ComPtr < ID3D12GraphicsCommandList> _cmdList = nullptr;//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
+	ComPtr < ID3D12CommandQueue> _cmdQueue = nullptr;//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
 
-	//•\¦‚ÉŠÖ‚í‚éƒoƒbƒtƒ@ü‚è
-	ComPtr<ID3D12Resource> _depthBuffer = nullptr;//[“xƒoƒbƒtƒ@
-	std::vector<ID3D12Resource*> _backBuffers;//ƒoƒbƒNƒoƒbƒtƒ@(2‚ÂˆÈãcƒXƒƒbƒvƒ`ƒFƒCƒ“‚ªŠm•Û)
-	ComPtr<ID3D12DescriptorHeap> _rtvHeaps = nullptr;//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
-	ComPtr<ID3D12DescriptorHeap> _dsvHeap = nullptr;//[“xƒoƒbƒtƒ@ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
-	std::unique_ptr<D3D12_VIEWPORT> _viewport;//ƒrƒ…[ƒ|[ƒg
-	std::unique_ptr<D3D12_RECT> _scissorrect;//ƒVƒU[‹éŒ`
+	//è¡¨ç¤ºã«é–¢ã‚ã‚‹ãƒãƒƒãƒ•ã‚¡å‘¨ã‚Š
+	ComPtr<ID3D12Resource> _depthBuffer = nullptr;//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
+	std::vector<ID3D12Resource*> _backBuffers;//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡(2ã¤ä»¥ä¸Šâ€¦ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ãŒç¢ºä¿)
+	ComPtr<ID3D12DescriptorHeap> _rtvHeaps = nullptr;//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
+	ComPtr<ID3D12DescriptorHeap> _dsvHeap = nullptr;//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
+	std::unique_ptr<D3D12_VIEWPORT> _viewport;//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆ
+	std::unique_ptr<D3D12_RECT> _scissorrect;//ã‚·ã‚¶ãƒ¼çŸ©å½¢
 	
-	//ƒV[ƒ“‚ğ\¬‚·‚éƒoƒbƒtƒ@‚Ü‚í‚è
+	//ã‚·ãƒ¼ãƒ³ã‚’æ§‹æˆã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã¾ã‚ã‚Š
 	ComPtr<ID3D12Resource> _sceneConstBuff = nullptr;
 
 	struct SceneData {
-		DirectX::XMMATRIX view;//ƒrƒ…[s—ñ
-		DirectX::XMMATRIX proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		DirectX::XMFLOAT3 eye;//‹“_À•W
+		DirectX::XMMATRIX view;//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
+		DirectX::XMMATRIX proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		DirectX::XMFLOAT3 eye;//è¦–ç‚¹åº§æ¨™
 	};
 	SceneData* _mappedSceneData;
 	ComPtr<ID3D12DescriptorHeap> _sceneDescHeap = nullptr;
 
-	//ƒtƒFƒ“ƒX
+	//ãƒ•ã‚§ãƒ³ã‚¹
 	ComPtr<ID3D12Fence> _fence = nullptr;
 	UINT64 _fenceVal = 0;
 
-	//ÅI“I‚ÈƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ì¶¬
+	//æœ€çµ‚çš„ãªãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ç”Ÿæˆ
 	HRESULT	CreateFinalRenderTargets();
-	//ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ì¶¬
+	//ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã®ç”Ÿæˆ
 	HRESULT CreateDepthStencilView();
 
-	//ƒXƒƒbƒvƒ`ƒFƒCƒ“‚Ì¶¬
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®ç”Ÿæˆ
 	HRESULT CreateSwapChain(const HWND& hwnd);
 
-	//DXGI‚Ü‚í‚è‰Šú‰»
+	//DXGIã¾ã‚ã‚ŠåˆæœŸåŒ–
 	HRESULT InitializeDXGIDevice();
 
 
 
-	//ƒRƒ}ƒ“ƒh‚Ü‚í‚è‰Šú‰»
+	//ã‚³ãƒãƒ³ãƒ‰ã¾ã‚ã‚ŠåˆæœŸåŒ–
 	HRESULT InitializeCommand();
 
-	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“—pƒrƒ…[‚Ì¶¬
+	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ç”¨ãƒ“ãƒ¥ãƒ¼ã®ç”Ÿæˆ
 	HRESULT CreateSceneView();
 
-	//ƒ[ƒh—pƒe[ƒuƒ‹
+	//ãƒ­ãƒ¼ãƒ‰ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«
 	using LoadLambda_t = std::function<HRESULT(const std::wstring& path, DirectX::TexMetadata*, DirectX::ScratchImage&)>;
 	std::map < std::string, LoadLambda_t> _loadLambdaTable;
-	//ƒeƒNƒXƒ`ƒƒƒe[ƒuƒ‹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ†ãƒ¼ãƒ–ãƒ«
 	std::map<std::string,ComPtr<ID3D12Resource>> _textureTable;
-	//ƒeƒNƒXƒ`ƒƒƒ[ƒ_ƒe[ƒuƒ‹‚Ìì¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒ¼ãƒ€ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ
 	void CreateTextureLoaderTable();
-	//ƒeƒNƒXƒ`ƒƒ–¼‚©‚çƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@ì¬A’†g‚ğƒRƒs[
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ä½œæˆã€ä¸­èº«ã‚’ã‚³ãƒ”ãƒ¼
 	ID3D12Resource* CreateTextureFromFile(const char* texpath);
 
 
@@ -85,13 +85,13 @@ public:
 	void BeginDraw();
 	void EndDraw();
 	void ExecuteCommand();
-	///ƒeƒNƒXƒ`ƒƒƒpƒX‚©‚ç•K—v‚ÈƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ•Ô‚·
-	///@param texpath ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹ƒpƒX
+	///ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹ã‹ã‚‰å¿…è¦ãªãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™
+	///@param texpath ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
 	ComPtr<ID3D12Resource> GetTextureByPath(const char* texpath);
 
-	ComPtr< ID3D12Device> Device();//ƒfƒoƒCƒX
-	ComPtr < ID3D12GraphicsCommandList> CommandList();//ƒRƒ}ƒ“ƒhƒŠƒXƒg
-	ComPtr < IDXGISwapChain4> Swapchain();//ƒXƒƒbƒvƒ`ƒFƒCƒ“
+	ComPtr< ID3D12Device> Device();//ãƒ‡ãƒã‚¤ã‚¹
+	ComPtr < ID3D12GraphicsCommandList> CommandList();//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
+	ComPtr < IDXGISwapChain4> Swapchain();//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³
 	void SetScene();
 
 };

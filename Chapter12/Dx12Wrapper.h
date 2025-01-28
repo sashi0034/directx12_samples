@@ -13,126 +13,126 @@
 class PMDActor;
 class PMDRenderer;
 using Microsoft::WRL::ComPtr;
-///DirectX12‚ÌŠe—v‘f‚Æ‚©ŠÖ”‚ğ
-///ƒ‰ƒbƒv‚µ‚Ä‚é‚¾‚¯‚ÌƒNƒ‰ƒX
+///DirectX12ã®å„è¦ç´ ã¨ã‹é–¢æ•°ã‚’
+///ãƒ©ãƒƒãƒ—ã—ã¦ã‚‹ã ã‘ã®ã‚¯ãƒ©ã‚¹
 class Dx12Wrapper
 {
 private:
 	struct MultiTexture{
-		ComPtr<ID3D12Resource> texBuff;//’ÊíƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
-		ComPtr<ID3D12Resource> sphBuff;//SPHƒeƒNƒXƒ`ƒƒ
-		ComPtr<ID3D12Resource> spaBuff;//SPAƒeƒNƒXƒ`ƒƒ
-		ComPtr<ID3D12Resource> toonBuff;//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒ
+		ComPtr<ID3D12Resource> texBuff;//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
+		ComPtr<ID3D12Resource> sphBuff;//SPHãƒ†ã‚¯ã‚¹ãƒãƒ£
+		ComPtr<ID3D12Resource> spaBuff;//SPAãƒ†ã‚¯ã‚¹ãƒãƒ£
+		ComPtr<ID3D12Resource> toonBuff;//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	};
 
 	HWND _hwnd;
 
-	//Šî–{“I‚È“z(DXGI)
+	//åŸºæœ¬çš„ãªå¥´(DXGI)
 	ComPtr < IDXGIFactory4> _dxgiFactory;
 	ComPtr < IDXGISwapChain4> _swapchain;
 
-	//Šî–{“I‚È“z(ƒfƒoƒCƒX)
+	//åŸºæœ¬çš„ãªå¥´(ãƒ‡ãƒã‚¤ã‚¹)
 	ComPtr < ID3D12Device> _dev;
 
 
-	//ƒRƒ}ƒ“ƒhƒLƒ…[(ƒRƒ}ƒ“ƒhÀs‚Ì’PˆÊ)
+	//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼(ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œã®å˜ä½)
 	ComPtr < ID3D12CommandQueue> _cmdQue;
 
-	//[“xƒoƒbƒtƒ@—pƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> _depthBuffer;
-	//[“xƒoƒbƒtƒ@ƒrƒ…[—pƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ç”¨ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> _dsvHeap;
 
 	bool CreateDepthBuffer();
 	bool CreateDSV();
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> _rtvDescHeap;
-	//ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ª‚Á‚Ä‚¢‚éƒŠƒ\[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ãŒæŒã£ã¦ã„ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	std::vector<ID3D12Resource*> _backBuffers;
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğŠi”[‚·‚é‚½‚ß‚Ìƒƒ‚ƒŠ—Ìˆæ
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’æ ¼ç´ã™ã‚‹ãŸã‚ã®ãƒ¡ãƒ¢ãƒªé ˜åŸŸ
 	ComPtr <ID3D12CommandAllocator> _cmdAlloc = nullptr;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg–{‘Ì(ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^‚É–½—ß‚ğ“o˜^‚·‚é‚½‚ß‚Ì
-	//ƒCƒ“ƒ^[ƒtƒFƒCƒX)
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆæœ¬ä½“(ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã«å‘½ä»¤ã‚’ç™»éŒ²ã™ã‚‹ãŸã‚ã®
+	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹)
 	ComPtr<ID3D12GraphicsCommandList> _cmdList = nullptr;
 	
-	//‘Ò‚¿‚Ì‚½‚ß‚ÌƒtƒFƒ“ƒX
+	//å¾…ã¡ã®ãŸã‚ã®ãƒ•ã‚§ãƒ³ã‚¹
 	ComPtr<ID3D12Fence> _fence;
 	UINT64 _fenceValue;
 
-	//–³‘Ê“Ç‚İ‚µ‚È‚¢‚æ‚¤‚ÉƒeƒNƒXƒ`ƒƒ‚Ìƒe[ƒuƒ‹‚ğì‚Á‚Ä‚¨‚­
+	//ç„¡é§„èª­ã¿ã—ãªã„ã‚ˆã†ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œã£ã¦ãŠã
 	std::unordered_map<std::wstring, ComPtr<ID3D12Resource>> _textureTable;
 
 	bool CreateTextureFromImageData(const DirectX::Image* img, ComPtr<ID3D12Resource>& buff,bool isDiscrete=false);
 
-	ComPtr<ID3D12Resource> _whiteTex;//”’ƒeƒNƒXƒ`ƒƒ
-	///æZ—p‚Ì^‚Á”’ƒeƒNƒXƒ`ƒƒ(æZ‚³‚ê‚Ä‚à‰e‹¿‚ªo‚È‚¢)‚ğì‚è‚Ü‚·B
+	ComPtr<ID3D12Resource> _whiteTex;//ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	///ä¹—ç®—ç”¨ã®çœŸã£ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£(ä¹—ç®—ã•ã‚Œã¦ã‚‚å½±éŸ¿ãŒå‡ºãªã„)ã‚’ä½œã‚Šã¾ã™ã€‚
 	bool CreateWhiteTexture();
 
-	ComPtr<ID3D12Resource> _blackTex;//•ƒeƒNƒXƒ`ƒƒ
-	///‰ÁZ—p‚Ì^‚Á•ƒeƒNƒXƒ`ƒƒ(‰ÁZ‚³‚ê‚Ä‚à‰e‹¿‚ªo‚È‚¢)‚ğì‚è‚Ü‚·B
+	ComPtr<ID3D12Resource> _blackTex;//é»’ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	///åŠ ç®—ç”¨ã®çœŸã£é»’ãƒ†ã‚¯ã‚¹ãƒãƒ£(åŠ ç®—ã•ã‚Œã¦ã‚‚å½±éŸ¿ãŒå‡ºãªã„)ã‚’ä½œã‚Šã¾ã™ã€‚
 	bool CreateBlackTexture();
 
-	ComPtr<ID3D12Resource> _gradTex;//ƒOƒŒ[ƒOƒ‰ƒf[ƒVƒ‡ƒ“ƒeƒNƒXƒ`ƒƒ
-	//ƒgƒD[ƒ“‚ª‚È‚¢ê‡‚ÌŠK’²‚ğ’è‹`‚·‚é
+	ComPtr<ID3D12Resource> _gradTex;//ã‚°ãƒ¬ãƒ¼ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	//ãƒˆã‚¥ãƒ¼ãƒ³ãŒãªã„å ´åˆã®éšèª¿ã‚’å®šç¾©ã™ã‚‹
 	bool CreateGradationTexture();
 
-	ComPtr < ID3D12Resource> _sceneCB;//À•W•ÏŠ·’è”ƒoƒbƒtƒ@
-	ComPtr < ID3D12DescriptorHeap> _sceneHeap;//À•W•ÏŠ·CBVƒq[ƒv
-	///À•W•ÏŠ·—p’è”ƒoƒbƒtƒ@‚¨‚æ‚Ñ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğì¬‚·‚é
+	ComPtr < ID3D12Resource> _sceneCB;//åº§æ¨™å¤‰æ›å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	ComPtr < ID3D12DescriptorHeap> _sceneHeap;//åº§æ¨™å¤‰æ›CBVãƒ’ãƒ¼ãƒ—
+	///åº§æ¨™å¤‰æ›ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡ãŠã‚ˆã³å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆã™ã‚‹
 	bool CreateTransformConstantBuffer();
 	bool CreateTransformBufferView();
 
 	struct SceneMatrix {
-		DirectX::XMMATRIX view;//ƒrƒ…[
-		DirectX::XMMATRIX proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-		DirectX::XMFLOAT3 eye;//‹“_
+		DirectX::XMMATRIX view;//ãƒ“ãƒ¥ãƒ¼
+		DirectX::XMMATRIX proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+		DirectX::XMFLOAT3 eye;//è¦–ç‚¹
 	};
 	SceneMatrix* _mappedScene;
 
-	//‹“_(ƒJƒƒ‰‚ÌˆÊ’u)XMVECTOR
-	//’‹“_(Œ©‚é‘ÎÛ‚ÌˆÊ’u)XMVECTOR
-	//ãƒxƒNƒgƒ‹(ã)XMVECTOR
+	//è¦–ç‚¹(ã‚«ãƒ¡ãƒ©ã®ä½ç½®)XMVECTOR
+	//æ³¨è¦–ç‚¹(è¦‹ã‚‹å¯¾è±¡ã®ä½ç½®)XMVECTOR
+	//ä¸Šãƒ™ã‚¯ãƒˆãƒ«(ä¸Š)XMVECTOR
 	DirectX::XMFLOAT3 _eye;
 	DirectX::XMFLOAT3 _target;
 	DirectX::XMFLOAT3 _up;
-	float _fov = DirectX::XM_PI/6;//ƒfƒtƒHƒ‹ƒg30‹
+	float _fov = DirectX::XM_PI/6;//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ30Â°
 
 	bool CreateCommandList();
 	void Barrier(ID3D12Resource* p,
 		D3D12_RESOURCE_STATES before, 
 		D3D12_RESOURCE_STATES after);
 
-	//˜c‚İƒeƒNƒXƒ`ƒƒ—p
+	//æ­ªã¿ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨
 	ComPtr<ID3D12DescriptorHeap> _distortionSRVHeap;
 	ComPtr<ID3D12Resource> _distortionTexBuffer;
 	bool CreateEffectBufferAndView();
 
 
-	//1–‡–ÚƒŒƒ“ƒ_ƒŠƒ“ƒO—p
-	//‚¢‚í‚ä‚éƒyƒ‰ƒ|ƒŠ‚É’£‚è•t‚¯‚é‚½‚ß‚ÌŠG‚Ì
-	//ƒƒ‚ƒŠƒŠƒ\[ƒX‚Æ‚»‚Ìƒrƒ…[
+	//1æšç›®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨
+	//ã„ã‚ã‚†ã‚‹ãƒšãƒ©ãƒãƒªã«å¼µã‚Šä»˜ã‘ã‚‹ãŸã‚ã®çµµã®
+	//ãƒ¡ãƒ¢ãƒªãƒªã‚½ãƒ¼ã‚¹ã¨ãã®ãƒ“ãƒ¥ãƒ¼
 	ComPtr<ID3D12DescriptorHeap> _peraRTVHeap;
 	ComPtr<ID3D12DescriptorHeap> _peraRegisterHeap;
 	ComPtr<ID3D12Resource> _peraResource;
-	//‚P–‡–Úƒyƒ‰ƒ|ƒŠ‚Ì‚½‚ß‚ÌƒŠƒ\[ƒX‚Æƒrƒ…[‚ğ
-	//ì¬
+	//ï¼‘æšç›®ãƒšãƒ©ãƒãƒªã®ãŸã‚ã®ãƒªã‚½ãƒ¼ã‚¹ã¨ãƒ“ãƒ¥ãƒ¼ã‚’
+	//ä½œæˆ
 	bool CreatePeraResourcesAndView();
 
 	ComPtr<ID3D12Resource> _bokehParamResource;
-	//ƒ{ƒP‚ÉŠÖ‚·‚éƒoƒbƒtƒ@‚ğì‚è’†‚Éƒ{ƒPƒpƒ‰ƒ[ƒ^‚ğ‘ã“ü‚·‚é
+	//ãƒœã‚±ã«é–¢ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚Šä¸­ã«ãƒœã‚±ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ä»£å…¥ã™ã‚‹
 	bool CreateBokehParamResource();
 
-	//ƒyƒ‰ƒ|ƒŠ2–‡–Ú
+	//ãƒšãƒ©ãƒãƒª2æšç›®
 	ComPtr<ID3D12Resource> _peraResource2;
 	ComPtr<ID3D12PipelineState> _peraPipeline2;
 
-	//ƒyƒ‰ƒ|ƒŠ—p’¸“_ƒoƒbƒtƒ@(Nš‚Ì4“_)
+	//ãƒšãƒ©ãƒãƒªç”¨é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡(Nå­—ã®4ç‚¹)
 	ComPtr<ID3D12Resource> _peraVB;
 	D3D12_VERTEX_BUFFER_VIEW _peraVBV;
 
-	//ƒyƒ‰ƒ|ƒŠ—pƒpƒCƒvƒ‰ƒCƒ“•ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒšãƒ©ãƒãƒªç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ï¼†ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12PipelineState> _peraPipeline;
 	ComPtr<ID3D12RootSignature> _peraRS;
 
@@ -158,25 +158,25 @@ public:
 	ComPtr<ID3D12Resource> GradTexture();
 
 
-	//ƒyƒ‰ƒ|ƒŠƒSƒ“‚Ö‚Ì•`‰æ€”õ
+	//ãƒšãƒ©ãƒãƒªã‚´ãƒ³ã¸ã®æç”»æº–å‚™
 	bool PreDrawToPera1();
-	//ƒyƒ‰ƒ|ƒŠƒSƒ“‚Ö‚Ì•`‰æŒãˆ—
+	//ãƒšãƒ©ãƒãƒªã‚´ãƒ³ã¸ã®æç”»å¾Œå‡¦ç†
 	void PostDrawToPera1();
 
-	//ƒyƒ‰ƒ|ƒŠƒSƒ“‚Ö‚Ì•`‰æ
+	//ãƒšãƒ©ãƒãƒªã‚´ãƒ³ã¸ã®æç”»
 	void DrawToPera1(std::shared_ptr<PMDRenderer> renderer);
 
-	//‰æ–Ê‚ÌƒNƒŠƒA
+	//ç”»é¢ã®ã‚¯ãƒªã‚¢
 	bool Clear();
 
-	//•`‰æ
+	//æç”»
 	void Draw(std::shared_ptr<PMDRenderer> renderer);
 
 	void DrawHorizontalBokeh();
 
 	void SetCameraSetting();
 
-	//ƒtƒŠƒbƒv
+	//ãƒ•ãƒªãƒƒãƒ—
 	void Flip();
 	void WaitForCommandQueue();
 

@@ -45,7 +45,7 @@ Application::Initialize() {
 	_wndClass.hInstance = GetModuleHandle(nullptr);
 	_wndClass.cbSize = sizeof(WNDCLASSEX);
 	_wndClass.lpfnWndProc = (WNDPROC)WindowProcedure;
-	_wndClass.lpszClassName = "DirectX12ƒTƒ“ƒvƒ‹";
+	_wndClass.lpszClassName = "DirectX12ã‚µãƒ³ãƒ—ãƒ«";
 	RegisterClassEx(&_wndClass);
 	
 	RECT wrc = {};
@@ -58,7 +58,7 @@ Application::Initialize() {
 
 	_hwnd = CreateWindow(
 		_wndClass.lpszClassName,
-		"DirectX12‚ÌÀŒ±‚Å[‚·",
+		"DirectX12ã®å®Ÿé¨“ã§ãƒ¼ã™",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -80,7 +80,7 @@ Application::Initialize() {
 		return false;
 	}
 
-	//imgui‚Ì‰Šú‰»
+	//imguiã®åˆæœŸåŒ–
 	if (ImGui::CreateContext() == nullptr) {
 		assert(0);
 		return false;
@@ -90,42 +90,42 @@ Application::Initialize() {
 		assert(0);
 		return false;
 	}
-	blnResult = ImGui_ImplDX12_Init(_dx12->Device(),//DirectX12ƒfƒoƒCƒX
-		1,//frames_in_flight‚Æà–¾‚É‚Í‚ ‚é‚ªflight‚ÌˆÓ–¡‚ª’Í‚ß‚¸(Œãq)
-		DXGI_FORMAT_R8G8B8A8_UNORM,//‘‚«‚İæRTV‚ÌƒtƒH[ƒ}ƒbƒg
-		_dx12->GetHeapForImgui().Get(),//imgui—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
-		_dx12->GetHeapForImgui()->GetCPUDescriptorHandleForHeapStart(),//CPUƒnƒ“ƒhƒ‹
-		_dx12->GetHeapForImgui()->GetGPUDescriptorHandleForHeapStart());//GPUƒnƒ“ƒhƒ‹
+	blnResult = ImGui_ImplDX12_Init(_dx12->Device(),//DirectX12ãƒ‡ãƒã‚¤ã‚¹
+		1,//frames_in_flightã¨èª¬æ˜ã«ã¯ã‚ã‚‹ãŒflightã®æ„å‘³ãŒæ´ã‚ãš(å¾Œè¿°)
+		DXGI_FORMAT_R8G8B8A8_UNORM,//æ›¸ãè¾¼ã¿å…ˆRTVã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+		_dx12->GetHeapForImgui().Get(),//imguiç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
+		_dx12->GetHeapForImgui()->GetCPUDescriptorHandleForHeapStart(),//CPUãƒãƒ³ãƒ‰ãƒ«
+		_dx12->GetHeapForImgui()->GetGPUDescriptorHandleForHeapStart());//GPUãƒãƒ³ãƒ‰ãƒ«
 
 
 
 	_pmdRenderer->Init();
-	_actor.reset(new PMDActor(_dx12,"Model/‰‰¹ƒ~ƒNmetal.pmd"));
+	_actor.reset(new PMDActor(_dx12,"Model/åˆéŸ³ãƒŸã‚¯metal.pmd"));
 	_actor->LoadVMDData("motion/yagokoro.vmd");
 	_actor->Move(-10, 0, 10);
 	_pmdRenderer->AddActor(_actor);
 
-	auto miku=make_shared<PMDActor>(_dx12, "Model/‰‰¹ƒ~ƒN.pmd");
+	auto miku=make_shared<PMDActor>(_dx12, "Model/åˆéŸ³ãƒŸã‚¯.pmd");
 	miku->LoadVMDData("motion/yagokoro.vmd");
 	miku->Move(0, 0, 0);
 	_pmdRenderer->AddActor(miku);
 
-	auto kaito = make_shared<PMDActor>(_dx12, "Model/ƒJƒCƒg.pmd");
+	auto kaito = make_shared<PMDActor>(_dx12, "Model/ã‚«ã‚¤ãƒˆ.pmd");
 	kaito->LoadVMDData("motion/yagokoro.vmd");
 	kaito->Move(-5, 0, 5);
 	_pmdRenderer->AddActor(kaito);
 
-	auto ruka = make_shared<PMDActor>(_dx12, "Model/„‰¹ƒ‹ƒJ.pmd");
+	auto ruka = make_shared<PMDActor>(_dx12, "Model/å·¡éŸ³ãƒ«ã‚«.pmd");
 	ruka->LoadVMDData("motion/yagokoro.vmd");
 	ruka->Move(10, 0, 10);
 	_pmdRenderer->AddActor(ruka);
 
-	auto meiko = make_shared<PMDActor>(_dx12, "Model/ç‰¹ƒƒCƒR.pmd");
+	auto meiko = make_shared<PMDActor>(_dx12, "Model/å’²éŸ³ãƒ¡ã‚¤ã‚³.pmd");
 	meiko->LoadVMDData("motion/yagokoro.vmd");
 	meiko->Move(-10, 0, 0);
 	_pmdRenderer->AddActor(meiko);
 	
-	auto rin = make_shared<PMDActor>(_dx12, "Model/‹¾‰¹ƒŠƒ“.pmd");
+	auto rin = make_shared<PMDActor>(_dx12, "Model/é¡éŸ³ãƒªãƒ³.pmd");
 	rin->LoadVMDData("motion/yagokoro.vmd");
 	rin->Move(10, 0, 0);
 	_pmdRenderer->AddActor(rin);
@@ -134,17 +134,17 @@ Application::Initialize() {
 	_pmdRenderer->AnimationStart();
 	return true;
 }
-///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®
+///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•
 void 
 Application::Run() {
 	
 	ShowWindow(_hwnd, SW_SHOW);
 	MSG msg = {};
-	float fov = 3.1415926535897f / 4.0f;//ƒÎ/4
+	float fov = 3.1415926535897f / 4.0f;//Ï€/4
 	
-	while (true) {//ƒƒCƒ“ƒ‹[ƒv
+	while (true) {//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);//–|–ó
+			TranslateMessage(&msg);//ç¿»è¨³
 			DispatchMessage(&msg);//
 		}
 		if (msg.message == WM_QUIT) {
@@ -206,13 +206,13 @@ Application::Run() {
 		_pmdRenderer->Update();
 
 		_pmdRenderer->BeforeDrawFromLight();
-		//‰e‚Ö‚Ì•`‰æ
+		//å½±ã¸ã®æç”»
 		_dx12->PreDrawShadow();
 		_pmdRenderer->DrawFromLight();
 
 		
 
-		//‚P–‡–Ú(ƒyƒ‰ƒ|ƒŠ‚Ö)
+		//ï¼‘æšç›®(ãƒšãƒ©ãƒãƒªã¸)
 		_dx12->PreDrawToPera1();
 		//_dx12->DrawPrimitiveShapes();
 		_pmdRenderer->BeforeDraw();
@@ -222,13 +222,13 @@ Application::Run() {
 
 		_dx12->DrawAmbientOcculusion();
 
-		////ƒuƒ‹[ƒ€—p
+		////ãƒ–ãƒ«ãƒ¼ãƒ ç”¨
 		//_dx12->DrawShrinkTextureForBlur();
 
-		//2–‡–Ú(ƒyƒ‰ƒ|ƒŠ1¨ƒyƒ‰ƒ|ƒŠ2‚Ö)
+		//2æšç›®(ãƒšãƒ©ãƒãƒª1â†’ãƒšãƒ©ãƒãƒª2ã¸)
 		//_dx12->DrawToPera2();
 
-		//3–‡–Ú(ƒyƒ‰ƒ|ƒŠ2¨ƒoƒbƒNƒoƒbƒtƒ@‚Ö)
+		//3æšç›®(ãƒšãƒ©ãƒãƒª2â†’ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¸)
 		_dx12->Clear();
 		_dx12->Draw(_pmdRenderer);
 
@@ -260,7 +260,7 @@ Application::Run() {
 		static float bloomCol[3] = {};
 		ImGui::ColorPicker3("Bloom color",bloomCol);
 
-		//Dx12Wrapper‚É‘Î‚µ‚Äİ’è‚ğ“n‚·
+		//Dx12Wrapperã«å¯¾ã—ã¦è¨­å®šã‚’æ¸¡ã™
 		_dx12->SetDebugDisplay(blnDebugDisp);
 		_dx12->SetSSAO(blnSSAO);
 		_dx12->SetSelfShadow(blnShadowmap);
@@ -278,7 +278,7 @@ Application::Run() {
 		_dx12->Flip();
 	}
 }
-///ƒAƒvƒŠƒP[ƒVƒ‡ƒ“I—¹
+///ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†
 void 
 Application::Terminate() {
 	CoUninitialize();

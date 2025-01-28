@@ -1,7 +1,7 @@
 #include"Type.hlsli"
-Texture2D<float4> tex : register(t0);//’ÊíƒJƒ‰[
-Texture2D<float4> texNorm : register(t1);//–@ü
-Texture2D<float4> texHighLum : register(t2);//‚‹P“x
+Texture2D<float4> tex : register(t0);//é€šå¸¸ã‚«ãƒ©ãƒ¼
+Texture2D<float4> texNorm : register(t1);//æ³•ç·š
+Texture2D<float4> texHighLum : register(t2);//é«˜è¼åº¦
 
 float4 GaussianFilteredColor5x5(Texture2D<float4> tex, SamplerState s, float2 uv, float dx, float dy) {
 	float4 center = tex.Sample(s, uv);

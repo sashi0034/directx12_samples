@@ -3,30 +3,30 @@ SamplerState smp : register(s0);
 SamplerState clutSmp : register(s1);
 SamplerComparisonState shadowSmp : register(s2);
 
-//ƒ}ƒeƒŠƒAƒ‹—pƒXƒƒbƒg
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer MaterialBuffer : register(b0) {
 	float4 diffuse;
 	float power;
 	float3 specular;
 	float3 ambient;
 };
-//ƒ}ƒeƒŠƒAƒ‹—p
-Texture2D<float4> tex : register(t0);//’ÊíƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> sph : register(t1);//ƒXƒtƒBƒAƒ}ƒbƒv(æZ)
-Texture2D<float4> spa : register(t2);//ƒXƒtƒBƒAƒ}ƒbƒv(‰ÁZ)
-Texture2D<float4> toon : register(t3);//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒ
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
+Texture2D<float4> tex : register(t0);//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> sph : register(t1);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(ä¹—ç®—)
+Texture2D<float4> spa : register(t2);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(åŠ ç®—)
+Texture2D<float4> toon : register(t3);//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
 
-//ƒVƒƒƒhƒEƒ}ƒbƒv—pƒ‰ƒCƒg[“xƒeƒNƒXƒ`ƒƒ
+//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ç”¨ãƒ©ã‚¤ãƒˆæ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£
 Texture2D<float> lightDepthTex : register(t4);
 
-//ƒV[ƒ“ŠÇ——pƒXƒƒbƒg
+//ã‚·ãƒ¼ãƒ³ç®¡ç†ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer SceneBuffer : register(b1) {
-	matrix view;//ƒrƒ…[
-	matrix proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	matrix invproj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	matrix lightCamera;//ƒ‰ƒCƒgƒrƒ…[ƒvƒƒWƒF
-	matrix shadow;//‰es—ñ
-	float3 eye;//‹“_
+	matrix view;//ãƒ“ãƒ¥ãƒ¼
+	matrix proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	matrix invproj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	matrix lightCamera;//ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§
+	matrix shadow;//å½±è¡Œåˆ—
+	float3 eye;//è¦–ç‚¹
 	
 };
 
@@ -55,18 +55,18 @@ float4 PrimitivePS(PrimitiveType input) : SV_TARGET{
 
 
 
-//ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
 PixelOutput BasicPS(BasicType input) {
 	float3 eyeray = normalize(input.pos-eye);
 	float3 light = normalize(float3(1,-1,1));
 	float3 rlight = reflect(light, input.normal);
 		
-	//ƒXƒyƒLƒ…ƒ‰‹P“x
+	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©è¼åº¦
 	float p = saturate(dot(rlight, -eyeray));
 
-	//MSDN‚Ìpow‚ÌƒhƒLƒ…ƒƒ“ƒg‚É‚æ‚é‚Æ
-	//p=0‚¾‚Á‚½‚èp==0&&power==0‚Ì‚Æ‚«NAN‚Ì‰Â”\«‚ª
-	//‚ ‚é‚½‚ßA”O‚Ì‚½‚ßˆÈ‰º‚Ì‚æ‚¤‚ÈƒR[ƒh‚É‚µ‚Ä‚¢‚é
+	//MSDNã®powã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã«ã‚ˆã‚‹ã¨
+	//p=0ã ã£ãŸã‚Šp==0&&power==0ã®ã¨ãNANã®å¯èƒ½æ€§ãŒ
+	//ã‚ã‚‹ãŸã‚ã€å¿µã®ãŸã‚ä»¥ä¸‹ã®ã‚ˆã†ãªã‚³ãƒ¼ãƒ‰ã«ã—ã¦ã„ã‚‹
 	//https://docs.microsoft.com/ja-jp/windows/win32/direct3dhlsl/dx-graphics-hlsl-pow
 	float specB = 0;
 	if (p > 0 && power > 0) {
@@ -76,13 +76,13 @@ PixelOutput BasicPS(BasicType input) {
 
 	float4 texCol = tex.Sample(smp, input.uv);
 	float2 spUV = (input.normal.xy
-		*float2(1, -1) //‚Ü‚¸ã‰º‚¾‚¯‚Ğ‚Á‚­‚è‚©‚¦‚·
-		+ float2(1, 1)//(1,1)‚ğ‘«‚µ‚Ä-1`1‚ğ0`2‚É‚·‚é
+		*float2(1, -1) //ã¾ãšä¸Šä¸‹ã ã‘ã²ã£ãã‚Šã‹ãˆã™
+		+ float2(1, 1)//(1,1)ã‚’è¶³ã—ã¦-1ã€œ1ã‚’0ã€œ2ã«ã™ã‚‹
 		) / 2;
 	float4 sphCol = sph.Sample(smp, spUV);
 	float4 spaCol = spa.Sample(smp, spUV);
 
-	//ƒfƒBƒtƒ…[ƒY–¾‚é‚³		
+	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºæ˜ã‚‹ã•		
 	float diffB = dot(-light, input.normal);
 	float4 toonCol = toon.Sample(clutSmp, float2(0, 1 - diffB));
 

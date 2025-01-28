@@ -13,31 +13,31 @@
 using Microsoft::WRL::ComPtr;
 class Dx12Wrapper;
 struct Material{
-	DirectX::XMFLOAT4 diffuse;//ƒfƒBƒtƒ…[ƒYF
-	float power;//ƒXƒyƒLƒ…ƒ‰‹­‚³
-	DirectX::XMFLOAT3 specular;//ƒXƒyƒLƒ…ƒ‰F
-	DirectX::XMFLOAT3 ambient;//ŠÂ‹«F
-	uint32_t indicesNum;//ƒCƒ“ƒfƒbƒNƒX”
+	DirectX::XMFLOAT4 diffuse;//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	float power;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·ã•
+	DirectX::XMFLOAT3 specular;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²
+	DirectX::XMFLOAT3 ambient;//ç’°å¢ƒè‰²
+	uint32_t indicesNum;//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
 };
 
 struct MultiTexturePath {
-	std::string texPath;//’ÊíƒeƒNƒXƒ`ƒƒƒpƒX
-	std::string sphPath;//æZƒeƒNƒXƒ`ƒƒƒpƒX
-	std::string spaPath;//‰ÁZƒeƒNƒXƒ`ƒƒƒpƒX
+	std::string texPath;//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹
+	std::string sphPath;//ä¹—ç®—ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹
+	std::string spaPath;//åŠ ç®—ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹
 
-	std::string toonPath;//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒƒpƒX
+	std::string toonPath;//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹
 
 };
 
 class PMDActor
 {
 private:
-	//ƒ‚[ƒVƒ‡ƒ“î•ñ
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
 	struct KeyFrame {
-		uint32_t frameNo;//ƒL[ƒtƒŒ[ƒ€‚ª‚ ‚éŒo‰ßƒtƒŒ[ƒ€”
-		DirectX::XMFLOAT4 quaternion;//‚»‚Ì‚Æ‚«‚Ç‚ê‚­‚ç‚¢‰ñ“]‚³‚¹‚é‚Ì‚©
-		DirectX::XMFLOAT3 offset;//Œ³‚ÌˆÊ’u‚©‚ç‚ÌƒIƒtƒZƒbƒg
-		std::array<DirectX::XMFLOAT2,2> cpnt;//ƒRƒ“ƒgƒ[ƒ‹ƒ|ƒCƒ“ƒg
+		uint32_t frameNo;//ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ãŒã‚ã‚‹çµŒéãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+		DirectX::XMFLOAT4 quaternion;//ãã®ã¨ãã©ã‚Œãã‚‰ã„å›è»¢ã•ã›ã‚‹ã®ã‹
+		DirectX::XMFLOAT3 offset;//å…ƒã®ä½ç½®ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		std::array<DirectX::XMFLOAT2,2> cpnt;//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒã‚¤ãƒ³ãƒˆ
 		KeyFrame() {}
 		KeyFrame(uint32_t fno, DirectX::XMFLOAT4& q,DirectX::XMFLOAT3& ofst,float cx1,float cy1,float cx2,float cy2) :frameNo(fno), 
 			quaternion(q),
@@ -49,30 +49,30 @@ private:
 		}
 	};
 	std::unordered_map<std::string, std::vector<KeyFrame>> _keyframes;
-	uint32_t _duration;//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘ƒtƒŒ[ƒ€”
+	uint32_t _duration;//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç·ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 
 	std::vector<uint32_t> _eyeBoneIdxes;
 
-	//ƒ[ƒh“™‚Ìˆ—‚ªI‚í‚Á‚ÄƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚µ‚½“_‚Å‚Ì
-	//TickCount©PC‹N“®‚©‚ç‚Ìƒ~ƒŠ•b
+	//ãƒ­ãƒ¼ãƒ‰ç­‰ã®å‡¦ç†ãŒçµ‚ã‚ã£ã¦ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã—ãŸæ™‚ç‚¹ã§ã®
+	//TickCountâ†PCèµ·å‹•æ™‚ã‹ã‚‰ã®ãƒŸãƒªç§’
 	uint32_t _lastTickCount;
 
-	//Œ»İ‚ÌŒo‰ßƒtƒŒ[ƒ€”‚É]‚Á‚Ä
-	//ƒ{[ƒ“s—ñ‚ğXV‚·‚é
+	//ç¾åœ¨ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã«å¾“ã£ã¦
+	//ãƒœãƒ¼ãƒ³è¡Œåˆ—ã‚’æ›´æ–°ã™ã‚‹
 	void UpdateMotion(uint32_t frame);
 
-	//ƒ{[ƒ“‚Ìî•ñ
+	//ãƒœãƒ¼ãƒ³ã®æƒ…å ±
 	struct BoneInfo {
-		int index;//©•ª‚ÌƒCƒ“ƒfƒbƒNƒX
-		DirectX::XMFLOAT3 pos;//ƒ{[ƒ“’†SÀ•W
+		int index;//è‡ªåˆ†ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		DirectX::XMFLOAT3 pos;//ãƒœãƒ¼ãƒ³ä¸­å¿ƒåº§æ¨™
 		BoneInfo(int idx, DirectX::XMFLOAT3& inpos) :index(idx), pos(inpos) {}
 		BoneInfo() :index(0), pos(DirectX::XMFLOAT3()) {}
 	};
 	std::vector<BoneInfo*> _boneAddressArray;
 	std::map<std::string, BoneInfo> _boneTable;
-	std::vector<DirectX::XMMATRIX> _boneMatrices;//ÅI“I‚ÉƒOƒ‰ƒ{‚É“n‚·ƒf[ƒ^
-	std::vector< std::vector<int> > _boneTree;//ƒ{[ƒ“ƒcƒŠ[
-	ComPtr<ID3D12Resource> _bonesBuff;//ƒ{[ƒ“”z—ñ—pƒoƒbƒtƒ@
+	std::vector<DirectX::XMMATRIX> _boneMatrices;//æœ€çµ‚çš„ã«ã‚°ãƒ©ãƒœã«æ¸¡ã™ãƒ‡ãƒ¼ã‚¿
+	std::vector< std::vector<int> > _boneTree;//ãƒœãƒ¼ãƒ³ãƒ„ãƒªãƒ¼
+	ComPtr<ID3D12Resource> _bonesBuff;//ãƒœãƒ¼ãƒ³é…åˆ—ç”¨ãƒãƒƒãƒ•ã‚¡
 	DirectX::XMMATRIX* _mappedBoneMatrix;
 	bool CreateBoneBuffer();
 
@@ -82,41 +82,41 @@ private:
 	unsigned int _vertNum;
 	unsigned int _indexNum;
 
-	std::vector<uint8_t> _vertexData;// ’¸“_ƒf[ƒ^
-	std::vector<uint16_t> _indexData;// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
-	std::vector<Material> _materials;// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^
-	std::vector<MultiTexturePath> _texturePaths;//ƒeƒNƒXƒ`ƒƒ‚Ì‘Š‘ÎƒpƒX
+	std::vector<uint8_t> _vertexData;// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
+	std::vector<uint16_t> _indexData;// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
+	std::vector<Material> _materials;// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿
+	std::vector<MultiTexturePath> _texturePaths;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç›¸å¯¾ãƒ‘ã‚¹
 	bool LoadFromPMD(const char* filepath);
 
-	ComPtr<ID3D12Resource> _vertexBuff;//’¸“_ƒoƒbƒtƒ@
-	ComPtr<ID3D12Resource> _indexBuff;//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
-	ComPtr<ID3D12Resource> _materialBuff;//ƒ}ƒeƒŠƒAƒ‹ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> _vertexBuff;//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+	ComPtr<ID3D12Resource> _indexBuff;//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
+	ComPtr<ID3D12Resource> _materialBuff;//ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒƒãƒ•ã‚¡
 	struct CompositeTexture {
-		ComPtr<ID3D12Resource> tex;//’Êí
-		ComPtr<ID3D12Resource> sph;//æZƒXƒtƒBƒAƒ}ƒbƒv
-		ComPtr<ID3D12Resource> spa;//‰ÁZƒXƒtƒBƒAƒ}ƒbƒv
-		ComPtr<ID3D12Resource> toon;//ƒgƒD[ƒ“
+		ComPtr<ID3D12Resource> tex;//é€šå¸¸
+		ComPtr<ID3D12Resource> sph;//ä¹—ç®—ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
+		ComPtr<ID3D12Resource> spa;//åŠ ç®—ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
+		ComPtr<ID3D12Resource> toon;//ãƒˆã‚¥ãƒ¼ãƒ³
 	};
-	std::vector<CompositeTexture> _texBuff;//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@(’Êí/SPH/SPA/TOON)
+	std::vector<CompositeTexture> _texBuff;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡(é€šå¸¸/SPH/SPA/TOON)
 
-	//ƒrƒ…[
-	D3D12_VERTEX_BUFFER_VIEW _vbView;//’¸“_ƒoƒbƒtƒ@
-	D3D12_INDEX_BUFFER_VIEW _ibView;//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
-	ComPtr<ID3D12DescriptorHeap> _materialHeap;//ƒ}ƒeƒŠƒAƒ‹‚Ğ‚Æ‚Ü‚Æ‚ß(ƒeƒNƒXƒ`ƒƒ‚àŠÜ‚Ş)
+	//ãƒ“ãƒ¥ãƒ¼
+	D3D12_VERTEX_BUFFER_VIEW _vbView;//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+	D3D12_INDEX_BUFFER_VIEW _ibView;//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
+	ComPtr<ID3D12DescriptorHeap> _materialHeap;//ãƒãƒ†ãƒªã‚¢ãƒ«ã²ã¨ã¾ã¨ã‚(ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚‚å«ã‚€)
 
-	//ƒoƒbƒtƒ@ì‚éŠÖ”
+	//ãƒãƒƒãƒ•ã‚¡ä½œã‚‹é–¢æ•°
 	bool CreateVertexBufferAndView();
 	bool CreateIndexBufferAndView();
 	bool CreateMaterialBuffer();
-	//ƒeƒNƒXƒ`ƒƒƒ[ƒh
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒ¼ãƒ‰
 	bool LoadTexture();
-	//ƒ}ƒeƒŠƒAƒ‹ƒoƒbƒtƒ@ƒrƒ…[
+	//ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	bool CreateMaterialBufferView();
 	std::shared_ptr<Dx12Wrapper> _dx;
 
 	
-	ComPtr < ID3D12Resource> _transformCB;//ƒvƒŒƒCƒ„[ˆÚ“®’è”ƒoƒbƒtƒ@
-	ComPtr < ID3D12DescriptorHeap> _transformHeap;//À•W•ÏŠ·CBVƒq[ƒv
+	ComPtr < ID3D12Resource> _transformCB;//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç§»å‹•å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	ComPtr < ID3D12DescriptorHeap> _transformHeap;//åº§æ¨™å¤‰æ›CBVãƒ’ãƒ¼ãƒ—
 	bool CreateTransformBuffer();
 	bool CreateTransformBufferView();
 

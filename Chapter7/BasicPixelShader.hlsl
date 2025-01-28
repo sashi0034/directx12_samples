@@ -1,11 +1,11 @@
 #include"BasicType.hlsli"
-Texture2D<float4> tex:register(t0);//0�ԃX���b�g�ɐݒ肳�ꂽ�e�N�X�`��
-SamplerState smp:register(s0);//0�ԃX���b�g�ɐݒ肳�ꂽ�T���v��
+Texture2D<float4> tex:register(t0);//0番スロットに設定されたテクスチャ
+SamplerState smp:register(s0);//0番スロットに設定されたサンプラ
 
-//�萔�o�b�t�@
+//定数バッファ
 cbuffer cbuff0 : register(b0) {
-	matrix world;//���[���h�ϊ��s��
-	matrix viewproj;//�r���[�v���W�F�N�V�����s��
+	matrix world;//ワールド変換行列
+	matrix viewproj;//ビュープロジェクション行列
 };
 
 float4 BasicPS(BasicType input ) : SV_TARGET{

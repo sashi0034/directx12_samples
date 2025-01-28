@@ -18,7 +18,7 @@ Helper::~Helper()
 
 std::vector<float> 
 GetGaussianWeights(size_t count, float s) {
-	std::vector<float> weights(count);//ƒEƒFƒCƒg”z—ñ•Ô‹p—p
+	std::vector<float> weights(count);//ã‚¦ã‚§ã‚¤ãƒˆé…åˆ—è¿”å´ç”¨
 	float x = 0.0f;
 	float total = 0.0f;
 	for (auto& wgt : weights) {
@@ -26,18 +26,18 @@ GetGaussianWeights(size_t count, float s) {
 		total += wgt;
 		x += 1.0f;
 	}
-	//^‚ñ’†‚ğ’†S‚É¶‰E‚ÉL‚ª‚é‚æ‚¤‚Éì‚è‚Ü‚·‚Ì‚Å
-	//¶‰E‚Æ‚¢‚¤–‚Å2”{‚µ‚Ü‚·B‚µ‚©‚µ‚»‚Ìê‡‚Í’†S‚Ì0‚ÌƒsƒNƒZƒ‹‚ª
-	//d•¡‚µ‚Ä‚µ‚Ü‚¢‚Ü‚·‚Ì‚Åe^0=1‚Æ‚¢‚¤‚±‚Æ‚ÅÅŒã‚É1‚ğˆø‚¢‚Ä’Òåë‚ª‡‚¤‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B
+	//çœŸã‚“ä¸­ã‚’ä¸­å¿ƒã«å·¦å³ã«åºƒãŒã‚‹ã‚ˆã†ã«ä½œã‚Šã¾ã™ã®ã§
+	//å·¦å³ã¨ã„ã†äº‹ã§2å€ã—ã¾ã™ã€‚ã—ã‹ã—ãã®å ´åˆã¯ä¸­å¿ƒã®0ã®ãƒ”ã‚¯ã‚»ãƒ«ãŒ
+	//é‡è¤‡ã—ã¦ã—ã¾ã„ã¾ã™ã®ã§e^0=1ã¨ã„ã†ã“ã¨ã§æœ€å¾Œã«1ã‚’å¼•ã„ã¦è¾»è¤„ãŒåˆã†ã‚ˆã†ã«ã—ã¦ã„ã¾ã™ã€‚
 	total = total * 2.0f - 1.0f;
-	//‘«‚µ‚Ä‚P‚É‚È‚é‚æ‚¤‚É‚·‚é
+	//è¶³ã—ã¦ï¼‘ã«ãªã‚‹ã‚ˆã†ã«ã™ã‚‹
 	for (auto& wgt : weights) {
 		wgt /= total;
 	}
 	return weights;
 }
 
-//‚PƒoƒCƒgstring‚ğƒƒCƒh•¶šwstring‚É•ÏŠ·‚·‚é
+//ï¼‘ãƒã‚¤ãƒˆstringã‚’ãƒ¯ã‚¤ãƒ‰æ–‡å­—wstringã«å¤‰æ›ã™ã‚‹
 wstring WStringFromString(const std::string& str) {
 	wstring wstr;
 	auto wcharNum = MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), nullptr, 0);
@@ -47,9 +47,9 @@ wstring WStringFromString(const std::string& str) {
 	return wstr;
 }
 
-///Šg’£q‚ğ•Ô‚·
-///@param path Œ³‚ÌƒpƒX•¶š—ñ
-///@return Šg’£q•¶š—ñ
+///æ‹¡å¼µå­ã‚’è¿”ã™
+///@param path å…ƒã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+///@return æ‹¡å¼µå­æ–‡å­—åˆ—
 wstring GetExtension(const wstring& path) {
 	int index = path.find_last_of(L'.');
 	return path.substr(index + 1, path.length() - index);
@@ -65,7 +65,7 @@ bool CheckResult(HRESULT &result, ID3DBlob * errBlob)
 			std::copy_n(static_cast<char*>(errBlob->GetBufferPointer()),
 				errBlob->GetBufferSize(),
 				outmsg.begin());
-			OutputDebugString(outmsg.c_str());//o—ÍƒEƒBƒ“ƒhƒE‚Éo—Í‚µ‚Ä‚Ë
+			OutputDebugString(outmsg.c_str());//å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«å‡ºåŠ›ã—ã¦ã­
 		}
 		assert(SUCCEEDED(result));
 #endif

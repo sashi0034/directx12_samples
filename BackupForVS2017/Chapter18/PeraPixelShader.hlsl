@@ -5,26 +5,26 @@
 #include"Type.hlsli"
 
 
-Texture2D<float4> tex : register(t0);//’ÊíƒJƒ‰[
-Texture2D<float4> texNorm : register(t1);//–@ü
-Texture2D<float4> texHighLum : register(t2);//‚‹P“x
+Texture2D<float4> tex : register(t0);//é€šå¸¸ã‚«ãƒ©ãƒ¼
+Texture2D<float4> texNorm : register(t1);//æ³•ç·š
+Texture2D<float4> texHighLum : register(t2);//é«˜è¼åº¦
 
 Texture2D<float4> distTex : register(t3);
 
-//[“x’lÀŒ±—p
-Texture2D<float> depthTex : register(t4);//ƒfƒvƒX
-Texture2D<float> lightDepthTex : register(t5);//ƒ‰ƒCƒgƒfƒvƒX
+//æ·±åº¦å€¤å®Ÿé¨“ç”¨
+Texture2D<float> depthTex : register(t4);//ãƒ‡ãƒ—ã‚¹
+Texture2D<float> lightDepthTex : register(t5);//ãƒ©ã‚¤ãƒˆãƒ‡ãƒ—ã‚¹
 
-Texture2D<float4> bloomTex : register(t6);//ƒuƒ‹[ƒ€—pk¬ƒoƒbƒtƒ@
-Texture2D<float4> dofTex : register(t7);//DOFk¬ƒoƒbƒtƒ@
+Texture2D<float4> bloomTex : register(t6);//ãƒ–ãƒ«ãƒ¼ãƒ ç”¨ç¸®å°ãƒãƒƒãƒ•ã‚¡
+Texture2D<float4> dofTex : register(t7);//DOFç¸®å°ãƒãƒƒãƒ•ã‚¡
 
-Texture2D<float> ssaoTex : register(t8);//SSAOƒeƒNƒXƒ`ƒƒ
+Texture2D<float> ssaoTex : register(t8);//SSAOãƒ†ã‚¯ã‚¹ãƒãƒ£
 
 SamplerState smp : register(s0);
 cbuffer Weights : register(b0) {
-	//CPU‚©‚çfloat[8]‚Å“n‚³‚ê‚½‚à‚Ì‚ğ
-	//³‚µ‚­ó‚¯æ‚ë‚¤‚Æ‚·‚é‚Æfloat4[2]‚É
-	//‚¹‚´‚é‚ğ“¾‚È‚¢‚½‚ß«‚Ì‚æ‚¤‚È‘‚«•û‚É‚È‚é
+	//CPUã‹ã‚‰float[8]ã§æ¸¡ã•ã‚ŒãŸã‚‚ã®ã‚’
+	//æ­£ã—ãå—ã‘å–ã‚ã†ã¨ã™ã‚‹ã¨float4[2]ã«
+	//ã›ã–ã‚‹ã‚’å¾—ãªã„ãŸã‚â†“ã®ã‚ˆã†ãªæ›¸ãæ–¹ã«ãªã‚‹
 	float4 wgts[2];
 };
 
@@ -146,7 +146,7 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 		retcol.rgb *= ssaoTex.Sample(smp, input.uv);
 	}
 
-	if (aaFlg) {//ƒAƒ“ƒ`ƒGƒCƒŠƒAƒVƒ“ƒOƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚ê‚ÎFXAA‚ğ—LŒø‚É‚·‚é
+	if (aaFlg) {//ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚·ãƒ³ã‚°ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚Œã°FXAAã‚’æœ‰åŠ¹ã«ã™ã‚‹
 		FxaaTex InputFXAATex = { smp, tex };
 		float3 aa = FxaaPixelShader(
 			input.uv,							// FxaaFloat2 pos,
@@ -176,7 +176,7 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 	float4 accumBloom = 0;
 	float2 dsize = float2(1.0f,0.5f);
 	float ofsty = 0.0f;
-	if (bloomFlg) {//ƒuƒ‹[ƒ€ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚ê‚Îƒuƒ‹[ƒ€‡¬‚ğ—LŒø‚É‚·‚é
+	if (bloomFlg) {//ãƒ–ãƒ«ãƒ¼ãƒ ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚Œã°ãƒ–ãƒ«ãƒ¼ãƒ åˆæˆã‚’æœ‰åŠ¹ã«ã™ã‚‹
 		accumBloom = GaussianFilteredColor5x5(texHighLum, smp, input.uv, dx, dy);
 		for (int i = 0; i < 8; ++i) {
 			accumBloom += GaussianFilteredColor5x5(bloomTex, smp, input.uv*dsize + float2(0, ofsty), dx, dy);
@@ -187,9 +187,9 @@ float4 PeraPS(PeraType input) : SV_TARGET{
 	}
 
 
-	if (dofFlg) {//”íÊŠE[“xƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚ê‚Î”íÊŠE[“x—pˆ—‚ğ—LŒø‚É‚·‚é
+	if (dofFlg) {//è¢«å†™ç•Œæ·±åº¦ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚Œã°è¢«å†™ç•Œæ·±åº¦ç”¨å‡¦ç†ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 		if (depthTex.Sample(smp, input.uv) < 1.0) {
-			//Šî€‚É‚È‚édepth
+			//åŸºæº–ã«ãªã‚‹depth
 			float baseDepth = depthTex.Sample(smp, focusPos);
 			float t = pow(distance(baseDepth, depthTex.Sample(smp, input.uv)), 0.5f);// *8.0f;
 

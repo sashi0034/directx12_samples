@@ -3,39 +3,39 @@ SamplerState smp : register(s0);
 SamplerState clutSmp : register(s1);
 SamplerComparisonState shadowSmp : register(s2);
 
-//ƒ}ƒeƒŠƒAƒ‹—pƒXƒƒbƒg
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer materialBuffer : register(b0) {
 	float4 diffuse;
 	float power;
 	float3 specular;
 	float3 ambient;
 };
-//ƒ}ƒeƒŠƒAƒ‹—p
-Texture2D<float4> tex : register(t0);//’ÊíƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> sph : register(t1);//ƒXƒtƒBƒAƒ}ƒbƒv(æZ)
-Texture2D<float4> spa : register(t2);//ƒXƒtƒBƒAƒ}ƒbƒv(‰ÁZ)
-Texture2D<float4> toon : register(t3);//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒ
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
+Texture2D<float4> tex : register(t0);//é€šå¸¸ãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> sph : register(t1);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(ä¹—ç®—)
+Texture2D<float4> spa : register(t2);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—(åŠ ç®—)
+Texture2D<float4> toon : register(t3);//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£
 
-//ƒVƒƒƒhƒEƒ}ƒbƒv—pƒ‰ƒCƒg[“xƒeƒNƒXƒ`ƒƒ
+//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ç”¨ãƒ©ã‚¤ãƒˆæ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£
 Texture2D<float> lightDepthTex : register(t4);
 
-//ƒV[ƒ“ŠÇ——pƒXƒƒbƒg
+//ã‚·ãƒ¼ãƒ³ç®¡ç†ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer SceneBuffer : register(b1) {
-	matrix view;//ƒrƒ…[
-	matrix proj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	matrix invproj;//ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	matrix lightCamera;//ƒ‰ƒCƒgƒrƒ…[ƒvƒƒWƒF
-	matrix shadow;//‰es—ñ
-	float3 eye;//‹“_
+	matrix view;//ãƒ“ãƒ¥ãƒ¼
+	matrix proj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	matrix invproj;//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	matrix lightCamera;//ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§
+	matrix shadow;//å½±è¡Œåˆ—
+	float3 eye;//è¦–ç‚¹
 	
 };
 
-//ƒAƒNƒ^[À•W•ÏŠ·—pƒXƒƒbƒg
+//ã‚¢ã‚¯ã‚¿ãƒ¼åº§æ¨™å¤‰æ›ç”¨ã‚¹ãƒ­ãƒƒãƒˆ
 cbuffer TransBuffer : register(b2) {
 	matrix world;
 }
 
-//ƒ{[ƒ“s—ñ”z—ñ
+//ãƒœãƒ¼ãƒ³è¡Œåˆ—é…åˆ—
 cbuffer BonesBuffer : register(b3) {
 	matrix bones[512];
 }
@@ -47,10 +47,10 @@ PrimitiveType PrimitiveVS(float4 pos:POSITION, float4 normal : NORMAL) {
 	output.normal = normal;
 	return output;
 }
-//’¸“_ƒVƒF[ƒ_(’¸“_î•ñ‚©‚ç•K—v‚È‚à‚Ì‚ğŸ‚Ìl‚Ö“n‚·)
-//ƒpƒCƒvƒ‰ƒCƒ“‚É“Š‚°‚é‚½‚ß‚É‚ÍSV_POSITION‚ª•K—v
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€(é ‚ç‚¹æƒ…å ±ã‹ã‚‰å¿…è¦ãªã‚‚ã®ã‚’æ¬¡ã®äººã¸æ¸¡ã™)
+//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«æŠ•ã’ã‚‹ãŸã‚ã«ã¯SV_POSITIONãŒå¿…è¦
 BasicType BasicVS(float4 pos:POSITION,float4 normal:NORMAL,float2 uv:TEXCOORD,min16uint2 boneno:BONENO,min16uint weight:WEIGHT,uint instNo:SV_InstanceID) {
-	//1280,720‚ğ’¼‚Åg‚Á‚Ä\‚í‚È‚¢B
+	//1280,720ã‚’ç›´ã§ä½¿ã£ã¦æ§‹ã‚ãªã„ã€‚
 	BasicType output;
 	float fWeight = float(weight) / 100.0f;
 	matrix conBone = bones[boneno.x]*fWeight + 
@@ -70,7 +70,7 @@ BasicType BasicVS(float4 pos:POSITION,float4 normal:NORMAL,float2 uv:TEXCOORD,mi
 }
 
 
-//‰e—p’¸“_À•W•ÏŠ·
+//å½±ç”¨é ‚ç‚¹åº§æ¨™å¤‰æ›
 float4 
 ShadowVS(float4 pos:POSITION, float4 normal : NORMAL, float2 uv : TEXCOORD, min16uint2 boneno : BONENO, min16uint weight : WEIGHT) :SV_POSITION{
 	float fWeight = float(weight) / 100.0f;

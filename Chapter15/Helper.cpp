@@ -14,7 +14,7 @@ Helper::~Helper()
 {
 }
 
-//‚PƒoƒCƒgstring‚ğƒƒCƒh•¶šwstring‚É•ÏŠ·‚·‚é
+//ï¼‘ãƒã‚¤ãƒˆstringã‚’ãƒ¯ã‚¤ãƒ‰æ–‡å­—wstringã«å¤‰æ›ã™ã‚‹
 wstring WStringFromString(const std::string& str) {
 	wstring wstr;
 	auto wcharNum = MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), nullptr, 0);
@@ -24,9 +24,9 @@ wstring WStringFromString(const std::string& str) {
 	return wstr;
 }
 
-///Šg’£q‚ğ•Ô‚·
-///@param path Œ³‚ÌƒpƒX•¶š—ñ
-///@return Šg’£q•¶š—ñ
+///æ‹¡å¼µå­ã‚’è¿”ã™
+///@param path å…ƒã®ãƒ‘ã‚¹æ–‡å­—åˆ—
+///@return æ‹¡å¼µå­æ–‡å­—åˆ—
 wstring GetExtension(const wstring& path) {
 	int index = path.find_last_of(L'.');
 	return path.substr(index + 1, path.length() - index);
@@ -42,7 +42,7 @@ bool CheckResult(HRESULT &result, ID3DBlob * errBlob)
 			std::copy_n(static_cast<char*>(errBlob->GetBufferPointer()),
 				errBlob->GetBufferSize(),
 				outmsg.begin());
-			OutputDebugString(outmsg.c_str());//o—ÍƒEƒBƒ“ƒhƒE‚Éo—Í‚µ‚Ä‚Ë
+			OutputDebugString(outmsg.c_str());//å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«å‡ºåŠ›ã—ã¦ã­
 		}
 		assert(SUCCEEDED(result));
 #endif
@@ -61,17 +61,17 @@ AligmentedValue(unsigned int size, unsigned int alignment) {
 std::vector<float> 
 GetGaussianValues(float s, size_t sampleNum) {
 	std::vector<float> weight(sampleNum);
-	float total = 0;//Œã‚©‚çŠ„‚é‚½‚ß‚É‡Œv’l‚ğ‹L˜^
+	float total = 0;//å¾Œã‹ã‚‰å‰²ã‚‹ãŸã‚ã«åˆè¨ˆå€¤ã‚’è¨˜éŒ²
 	for (int i = 0; i < sampleNum; ++i) {
 		float x = static_cast<float>(i);
 		auto wgt= expf(-(x * x) / (2 * s*s));
 		weight[i] = wgt;
 		total += wgt;
 	}
-	//‚±‚±‚Ü‚Å‚¾‚ÆA‰E”¼•ª‚¾‚¯‚È‚Ì‚Å
-	//¶”¼•ª(¶‰E‘ÎÌ‚È‚Ì‚ÅAƒf[ƒ^‚Í‚¢‚ç‚È‚¢)
-	//‚Å‚àƒg[ƒ^ƒ‹‚ÍÄŒvZB‚Q”{‚µ‚Äƒf[ƒ^0”Ô‚ª
-	//d•¡‚µ‚Ä‚¢‚é‚½‚ßA‚±‚ê‚ğˆø‚­
+	//ã“ã“ã¾ã§ã ã¨ã€å³åŠåˆ†ã ã‘ãªã®ã§
+	//å·¦åŠåˆ†(å·¦å³å¯¾ç§°ãªã®ã§ã€ãƒ‡ãƒ¼ã‚¿ã¯ã„ã‚‰ãªã„)
+	//ã§ã‚‚ãƒˆãƒ¼ã‚¿ãƒ«ã¯å†è¨ˆç®—ã€‚ï¼’å€ã—ã¦ãƒ‡ãƒ¼ã‚¿0ç•ªãŒ
+	//é‡è¤‡ã—ã¦ã„ã‚‹ãŸã‚ã€ã“ã‚Œã‚’å¼•ã
 	total = total * 2 - weight[0];
 	for (auto& wgt : weight) {
 		wgt /= total;

@@ -15,37 +15,37 @@
 class Dx12Wrapper;
 class PMDRenderer;
 class PMDActor;
-///ƒVƒ“ƒOƒ‹ƒgƒ“ƒNƒ‰ƒX
+///ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¯ãƒ©ã‚¹
 class Application
 {
 private:
-	//‚±‚±‚É•K—v‚È•Ï”(ƒoƒbƒtƒ@‚âƒq[ƒv‚È‚Ç)‚ğ‘‚­
-	//ƒEƒBƒ“ƒhƒEü‚è
+	//ã“ã“ã«å¿…è¦ãªå¤‰æ•°(ãƒãƒƒãƒ•ã‚¡ã‚„ãƒ’ãƒ¼ãƒ—ãªã©)ã‚’æ›¸ã
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å‘¨ã‚Š
 	WNDCLASSEX _windowClass;
 	HWND _hwnd;
 	std::shared_ptr<Dx12Wrapper> _dx12;
 	std::shared_ptr<PMDRenderer> _pmdRenderer;
 	std::shared_ptr<PMDActor> _pmdActor;
 
-	//ƒQ[ƒ€—pƒEƒBƒ“ƒhƒE‚Ì¶¬
+	//ã‚²ãƒ¼ãƒ ç”¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ
 	void CreateGameWindow(HWND &hwnd, WNDCLASSEX &windowClass);
 
-	//«ƒVƒ“ƒOƒ‹ƒgƒ“‚Ì‚½‚ß‚ÉƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğprivate‚É
-	//‚³‚ç‚ÉƒRƒs[‚Æ‘ã“ü‚ğ‹Ö~‚É
+	//â†“ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã®ãŸã‚ã«ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’privateã«
+	//ã•ã‚‰ã«ã‚³ãƒ”ãƒ¼ã¨ä»£å…¥ã‚’ç¦æ­¢ã«
 	Application();
 	Application(const Application&) = delete;
 	void operator=(const Application&) = delete;
 public:
-	///Application‚ÌƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ“¾‚é
+	///Applicationã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å¾—ã‚‹
 	static Application& Instance();
 
-	///‰Šú‰»
+	///åˆæœŸåŒ–
 	bool Init();
 
-	///ƒ‹[ƒv‹N“®
+	///ãƒ«ãƒ¼ãƒ—èµ·å‹•
 	void Run();
 
-	///Œãˆ—
+	///å¾Œå‡¦ç†
 	void Terminate();
 	SIZE GetWindowSize()const;
 	~Application();

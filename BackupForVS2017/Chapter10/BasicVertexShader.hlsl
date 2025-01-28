@@ -1,39 +1,39 @@
 #include"BasicType.hlsli"
 
 
-//’è”ƒoƒbƒtƒ@0
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡0
 cbuffer SceneData : register(b0) {
 	matrix view;
-	matrix proj;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	matrix proj;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	float3 eye;
 };
 cbuffer Transform : register(b1) {
-	matrix world;//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	matrix bones[256];//ƒ{[ƒ“s—ñ
+	matrix world;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
+	matrix bones[256];//ãƒœãƒ¼ãƒ³è¡Œåˆ—
 }
 
-//’è”ƒoƒbƒtƒ@1
-//ƒ}ƒeƒŠƒAƒ‹—p
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡1
+//ãƒãƒ†ãƒªã‚¢ãƒ«ç”¨
 cbuffer Material : register(b2) {
-	float4 diffuse;//ƒfƒBƒtƒ…[ƒYF
-	float4 specular;//ƒXƒyƒLƒ…ƒ‰
-	float3 ambient;//ƒAƒ“ƒrƒGƒ“ƒg
+	float4 diffuse;//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²
+	float4 specular;//ã‚¹ãƒšã‚­ãƒ¥ãƒ©
+	float3 ambient;//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
 };
 
 
 BasicType BasicVS(float4 pos : POSITION , float4 normal : NORMAL, float2 uv : TEXCOORD, min16uint2 boneno : BONENO, min16uint weight:WEIGHT) {
-	BasicType output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
+	BasicType output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
 	float w = (float)weight / 100.0f;
 	matrix bm = bones[boneno[0]] * w + bones[boneno[1]] * (1.0f - w);
 	pos = mul(bm, pos);
 	pos = mul(world, pos);
-	output.svpos = mul(mul(proj,view),pos);//ƒVƒF[ƒ_‚Å‚Í—ñ—Dæ‚È‚Ì‚Å’ˆÓ
+	output.svpos = mul(mul(proj,view),pos);//ã‚·ã‚§ãƒ¼ãƒ€ã§ã¯åˆ—å„ªå…ˆãªã®ã§æ³¨æ„
 	output.pos = mul(view, pos);
-	normal.w = 0;//‚±‚±d—v(•½sˆÚ“®¬•ª‚ğ–³Œø‚É‚·‚é)
-	output.normal = mul(world,mul(bm,normal));//–@ü‚É‚àƒ{[ƒ“‚Æƒ[ƒ‹ƒh•ÏŠ·‚ğs‚¤
+	normal.w = 0;//ã“ã“é‡è¦(å¹³è¡Œç§»å‹•æˆåˆ†ã‚’ç„¡åŠ¹ã«ã™ã‚‹)
+	output.normal = mul(world,mul(bm,normal));//æ³•ç·šã«ã‚‚ãƒœãƒ¼ãƒ³ã¨ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã‚’è¡Œã†
 	output.vnormal = mul(view, output.normal);
 	output.uv = uv;
-	output.ray = normalize(output.pos.xyz - mul(view,eye));//‹üƒxƒNƒgƒ‹
+	output.ray = normalize(output.pos.xyz - mul(view,eye));//è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	return output;
 }

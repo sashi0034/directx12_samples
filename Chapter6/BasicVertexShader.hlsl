@@ -1,13 +1,13 @@
 #include"BasicType.hlsli"
 
-//•ÏŠ·‚ğ‚Ü‚Æ‚ß‚½\‘¢‘Ì
+//å¤‰æ›ã‚’ã¾ã¨ã‚ãŸæ§‹é€ ä½“
 cbuffer cbuff0 : register(b0) {
-	matrix mat;//•ÏŠ·s—ñ
+	matrix mat;//å¤‰æ›è¡Œåˆ—
 };
 
-//’¸“_ƒVƒF[ƒ_
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€
 BasicType BasicVS(float4 pos : POSITION,float2 uv:TEXCOORD) {
-	BasicType output;//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö“n‚·’l
+	BasicType output;//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸æ¸¡ã™å€¤
 	output.svpos = mul(mat,pos);
 	output.uv = uv;
 	return output;
