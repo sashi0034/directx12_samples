@@ -20,5 +20,6 @@
     <None Include="BasicType.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
