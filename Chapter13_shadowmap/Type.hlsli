@@ -1,4 +1,4 @@
-//モデル描画用
+//繝｢繝�繝ｫ謠冗判逕ｨ
 struct BasicType {
 	float4 svpos : SV_POSITION;
 	float4 pos : POSITION;
@@ -8,7 +8,7 @@ struct BasicType {
 	float instNo : INSTNO;
 };
 
-//基本形状用
+//蝓ｺ譛ｬ蠖｢迥ｶ逕ｨ
 struct PrimitiveType {
 	float4 svpos:SV_POSITION;
 	float4 tpos : TPOS;
@@ -16,7 +16,7 @@ struct PrimitiveType {
 };
 
 
-//ペラポリゴン描画用
+//繝壹Λ繝昴Μ繧ｴ繝ｳ謠冗判逕ｨ
 struct PeraType {
 	float4 pos: SV_POSITION;
 	float2 uv:TEXCOORD;

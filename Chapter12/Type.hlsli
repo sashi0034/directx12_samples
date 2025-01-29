@@ -1,4 +1,4 @@
-//ƒ‚ƒfƒ‹•`‰æ—p
+//Æ’â€šÆ’fÆ’â€¹â€¢`â€°Ã¦â€”p
 struct BasicType {
 	float4 svpos : SV_POSITION;
 	float4 pos : POSITION;
@@ -8,7 +8,7 @@ struct BasicType {
 	float boneno : BONENO;
 };
 
-//ƒyƒ‰ƒ|ƒŠƒSƒ“•`‰æ—p
+//Æ’yÆ’â€°Æ’|Æ’Å Æ’SÆ’â€œâ€¢`â€°Ã¦â€”p
 struct PeraType {
 	float4 pos: SV_POSITION;
 	float2 uv:TEXCOORD;

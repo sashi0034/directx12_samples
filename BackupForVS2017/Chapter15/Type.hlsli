@@ -17,18 +17,18 @@ struct PrimitiveType {
 
 
 struct PixelOutput {
-	float4 col:SV_TARGET0;//’Êí‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOŒ‹‰Ê
-	float4 normal:SV_TARGET1;//–@ü
-	float4 highLum:SV_TARGET2;//‚‹P“x(High Luminance)
+	float4 col:SV_TARGET0;//é€šå¸¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°çµæœ
+	float4 normal:SV_TARGET1;//æ³•ç·š
+	float4 highLum:SV_TARGET2;//é«˜è¼åº¦(High Luminance)
 };
 
-//ƒyƒ‰ƒ|ƒŠƒSƒ“•`‰æ—p
+//ãƒšãƒ©ãƒãƒªã‚´ãƒ³æç”»ç”¨
 struct PeraType {
 	float4 pos: SV_POSITION;
 	float2 uv:TEXCOORD;
 };
 
 struct BlurOutput {
-	float4 highLum:SV_TARGET0;//‚‹P“x(High Luminance)
-	float4 col:SV_TARGET1;//’Êí‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOŒ‹‰Ê
+	float4 highLum:SV_TARGET0;//é«˜è¼åº¦(High Luminance)
+	float4 col:SV_TARGET1;//é€šå¸¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°çµæœ
 };

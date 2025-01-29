@@ -1,11 +1,11 @@
 
-//’¸“_ƒVƒF[ƒ_¨ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ö‚Ì‚â‚èŽæ‚è‚ÉŽg—p‚·‚é
-//\‘¢‘Ì
+//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€â†’ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã¸ã®ã‚„ã‚Šå–ã‚Šã«ä½¿ç”¨ã™ã‚‹
+//æ§‹é€ ä½“
 struct BasicType {
-	float4 svpos:SV_POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 pos:POSITION;//ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 normal:NORMAL0;//–@üƒxƒNƒgƒ‹
-	float4 vnormal:NORMAL1;//–@üƒxƒNƒgƒ‹
-	float2 uv:TEXCOORD;//UV’l
-	float3 ray:VECTOR;//ƒxƒNƒgƒ‹
+	float4 svpos:SV_POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 pos:POSITION;//ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 normal:NORMAL0;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float4 vnormal:NORMAL1;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float2 uv:TEXCOORD;//UVå€¤
+	float3 ray:VECTOR;//ãƒ™ã‚¯ãƒˆãƒ«
 };

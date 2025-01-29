@@ -2,7 +2,7 @@ import os
 import chardet
 
 # 対象とする拡張子のセット（必要に応じて追加）
-TARGET_EXTENSIONS = {'.c', '.cpp', '.h', '.hpp', '.hlsl'}
+TARGET_EXTENSIONS = {'.c', '.cpp', '.h', '.hpp', '.hlsl', '.hlsli'}
 
 
 def convert_to_utf8(file_path):
