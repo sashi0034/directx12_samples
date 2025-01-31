@@ -433,18 +433,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = LoadFromWICFile(L"img/textest.png", WIC_FLAGS_NONE, &metadata, scratchImg);
 	auto img = scratchImg.GetImage(0, 0, 0);//生データ抽出
 
-	////ノイズテクスチャの作成
-	//struct TexRGBA {
-	//	unsigned char R, G, B, A;
-	//};
-	//std::vector<TexRGBA> texturedata(256 * 256);
-
-	//for (auto& rgba : texturedata) {
-	//	rgba.R = rand() % 256;
-	//	rgba.G = rand() % 256;
-	//	rgba.B = rand() % 256;
-	//	rgba.A = 255;//アルファは1.0という事にします。
-	//}
+	// //ノイズテクスチャの作成
+	// struct TexRGBA {
+	// 	unsigned char R, G, B, A;
+	// };
+	// std::vector<TexRGBA> texturedata(256 * 256);
+	//
+	// for (auto& rgba : texturedata) {
+	// 	rgba.R = rand() % 256;
+	// 	rgba.G = rand() % 256;
+	// 	rgba.B = rand() % 256;
+	// 	rgba.A = 255;//アルファは1.0という事にします。
+	// }
 
 	//WriteToSubresourceで転送する用のヒープ設定
 	D3D12_HEAP_PROPERTIES texHeapProp = {};
@@ -478,6 +478,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	result = texbuff->WriteToSubresource(0,
 		nullptr,//全領域へコピー
+		// texturedata.data(), //元データアドレス
+		// static_cast<UINT>(256), //1ラインサイズ
+		// static_cast<UINT>(texturedata.size()) //全サイズ
 		img->pixels,//元データアドレス
 		static_cast<UINT>(img->rowPitch),//1ラインサイズ
 		static_cast<UINT>(img->slicePitch)//全サイズ
