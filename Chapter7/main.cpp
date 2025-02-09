@@ -269,7 +269,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char signature[3];
 	PMDHeader pmdheader = {};
 	FILE* fp;
-	auto err= fopen_s(&fp,"Model/初音ミク.pmd", "rb");
+	auto err= fopen_s(&fp,"Model/miku.pmd", "rb");
 	if (fp == nullptr) {
 		char strerr[256];
 		strerror_s(strerr, 256, err);
